@@ -1,0 +1,19 @@
+#{extends 'site.html'/}
+
+#{form @Orders.saveOrderInfo() }
+
+    #{select name:"order.type",label:'Type of Machine', value:flash.order?.type, 
+        values:['LAPTOP','DESKTOP'],
+        labels:['Laptop','Desktop'] /}
+    
+    #{select name:"order.disposalMethod",label:'Disposal Method', value:flash.order?.disposalMethod, 
+        values:['MAGNETIC','PHYSICAL','RETURN'],
+        labels:['Magnetically Erased','+ $10.00 Physically Destroyed','Return my machine'] /}
+
+    #{select name:"order.plan",label:'Cleaning Plan', value:flash.order?.plan, 
+        values:['SILVER','GOLD','PLATINUM'],
+        labels:['Silver Plan ( 20 Gigabytes )','Gold Plan','Platinum Plan'] /}
+
+        <input type="submit" value="Save"/>
+
+#{/form}

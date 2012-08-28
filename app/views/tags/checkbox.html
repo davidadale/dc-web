@@ -1,0 +1,11 @@
+<div class="control-group #{ifError "${_name}"}error#{/ifError}">
+  <label class="control-label" for="input01">${_label}</label>
+  <div class="controls">
+    <label class="checkbox">
+        checked value: ${_checkedValue} value: ${_value}
+        <input type="checkbox" class="input-xlarge" name="${_name}"
+        #{if _checkedValue==_value} checked#{/if} #{if _checkedValue!=null}value="${_checkedValue}"#{/if}  id="${_id?_id:_name}" placeholder="${_placeholder}">
+        <p class="help-inline">#{error "${_name}"/}</p>
+    </label>
+  </div>
+</div>

@@ -1,0 +1,7 @@
+<div class="control-group #{ifError "${_name}"}error#{/ifError}">
+    <label class="control-label" for="textarea">${_label}</label>
+    <div class="controls">
+      <textarea class="input-xlarge" id="textarea" name="${_name}" rows="3">${_value}</textarea>
+      <p class="help-inline">#{error "${_name}"/}</p>
+    </div>
+</div>

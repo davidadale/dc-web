@@ -1,0 +1,7 @@
+# Application dependencies
+
+require:
+    - play
+    - play -> secure
+    - postgresql -> postgresql 9.1-901.jdbc4
+    - com.google.code.gson -> gson 2.2.2

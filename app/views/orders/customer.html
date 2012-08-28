@@ -1,0 +1,13 @@
+#{extends 'site.html'/}
+
+<div class="row">
+<div class="offset4 span5">
+	#{form @Orders.saveCustomerInfo() }
+		#{inputText name:"customer.firstName", value:flash.customer?.firstName, label:"First Name"/}
+		#{inputText name:"customer.lastName", value:flash.customer?.lastName, label:"Last Name"/}
+		#{inputText name:"customer.email", value:flash.customer?.email, label:"Email"/}
+		#{inputText name:"customer.phone", value:flash.customer?.phone,label:"Phone Number"/}
+		<input type="submit" value="Save"/>
+	#{/form}
+</div>	
+</div>

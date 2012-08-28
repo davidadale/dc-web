@@ -1,0 +1,71 @@
+#{extends 'main.html' /}
+#{set title:'Home' /}
+
+<div class="tabbable">
+    <ul class="nav nav-tabs" id="contentTabs">
+    <li class="active"><a href="#tab1"><img src="@{'/public/images/audio.png'}" width="100px"/></a></li>
+    <li><a href="#tab2"><img src="@{'/public/images/video.png'}" width="100px"/></a></li>
+    <li><a href="#tab3"><img src="@{'/public/images/photos.png'}" width="100px"/></a></li>
+    <li><a href="#tab4"><img src="@{'/public/images/docs.png'}" width="100px"/></a></li>    
+    </ul>
+    <div class="tab-content">
+        <div class="tab-pane active" id="tab1">
+            <div class="span5">
+                <div id="myCarousel" class="carousel slide">
+                  <!-- Carousel items -->
+                  <div class="carousel-inner">
+                    <div class="active item"><img src="@{'/public/images/video.png'}" width="100px"/></div>
+                    <div class="item"><img src="@{'/public/images/video.png'}" width="100px"/></div>
+                    <div class="item"><img src="@{'/public/images/video.png'}" width="100px"/></div>
+                  </div>
+                  <!-- Carousel nav -->
+                  <a class="carousel-control left" href="#myCarousel" data-slide="prev">&lsaquo;</a>
+                  <a class="carousel-control right" href="#myCarousel" data-slide="next">&rsaquo;</a>
+                </div>                
+            </div>    
+            <div class="span5">
+            <table class="table table-striped table-bordered table-condensed">
+                <thead>
+                    <tr>
+                        <th>File Name</th>
+                        <th>Size</th>
+                    </tr> 
+                </thead> 
+                <tbody>
+                    #{list items:items,as:"item"}
+                    <tr>
+                        <td>${item.orderNumber}</td>
+                        <td>${item.filename}</td>
+                        <td>${item.size}</td>
+                    </tr>
+                    #{/list}
+                </tbody>    
+            </table>         
+            </div>   
+          <p>I'm in Section 1.</p>
+        </div>
+        <div class="tab-pane" id="tab2">
+          <p>Howdy, I'm in Section 2.</p>
+        </div>
+        <div class="tab-pane" id="tab3">
+          <p>Howdy, I'm in Section 3.</p>
+        </div>
+        <div class="tab-pane" id="tab4">
+          <p>Howdy, I'm in Section 4.</p>
+        </div>            
+      </div>
+</div>      
+
+#{set 'moreScripts' }
+<script>
+$(function(){
+    $('#contentTabs a').click(function (e) {
+      e.preventDefault();
+      $(this).tab('show');
+    })
+    $('.carousel').carousel({
+      interval: 2000
+    })    
+})
+</script>
+#{/set}

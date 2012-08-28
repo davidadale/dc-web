@@ -1,0 +1,15 @@
+#{extends 'site.html'/}
+
+<div class="offset3 span9">
+
+#{form @Orders.saveBillingInfo() }
+    #{inputText name:"billing.address", value:billing?.address, label:"Address"/}
+    #{inputText name:"billing.address2", value:billing?.address2/}
+    #{inputText name:"billing.city", value:billing?.city, label:"City"/}
+    #{inputText name:"billing.state", value:billing?.state,label:"State"/}
+    #{inputText name:"billing.zip", value:billing?.zip,label:"Zip Code"/}
+    #{checkbox name:"billing.shipSame",checkedValue:true, value:billing?.shipSame,label:"Use this address for shipping to."/}
+    <input type="submit" value="Save"/>
+#{/form}
+
+</div>

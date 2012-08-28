@@ -1,0 +1,17 @@
+<div class="control-group #{ifError "${_name}"}error#{/ifError}">
+    <label class="control-label" for="textarea">${_label}</label>
+    <div class="controls">
+        <select name="${_name}">
+            #{list items:_options, as:'opt'}
+            <option#{if opt==_value} selected#{/if} value="${opt}" >#{if _labelProperty}${opt.getAt(_labelProperty)}#{/if}#{else}${opt}#{/else}</option>
+            #{/list}
+            #{list items:_labels,as:'label'}
+            <option #{if _values.get(label_index-1)==_value} selected#{/if} value="${_values.get(label_index-1)}">${label}</option>
+            #{/list}
+        </select>
+      <p class="help-inline">#{error "${_name}"/}</p>
+    </div>
+</div>
+
+
+ 

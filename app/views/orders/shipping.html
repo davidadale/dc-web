@@ -1,0 +1,7 @@
+#{form @Orders.saveShippingInfo() }
+<input type="text" name="shipping.address" value="${flash.shipping?.address}"/>
+<input type="text" name="shipping.address2" value="${flash.shipping?.address2}"/>
+<input type="text" name="shipping.city" value="${flash.shipping?.city}"/>
+<input type="text" name="shipping.state" value="${flash.shipping?.state}"/>
+<input type="text" name="shipping.zip" value="${flash.shipping?.zip}"/>
+#{/form}

@@ -1,0 +1,6 @@
+{
+    status:${result.status}
+    errors:${result.message}
+}
+
+

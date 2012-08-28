@@ -1,0 +1,11 @@
+#{if _items}
+<div class="pagination pagination-right">
+  <ul>
+    <li><a href="#">Prev</a></li>
+    #{list items:_items, as:'it'}
+      <li class="name_index"><a href="#">${it_index}</a></li>
+    #{/list}
+    <li><a href="#">Next</a></li>
+  </ul>
+</div>
+#{/if}
