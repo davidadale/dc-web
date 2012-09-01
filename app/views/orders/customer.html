@@ -1,13 +1,18 @@
 #{extends 'site.html'/}
 
-<div class="row">
-<div class="offset4 span5">
+<div class="row-fluid">
+	<div class="span5">
 	#{form @Orders.saveCustomerInfo() }
-		#{inputText name:"customer.firstName", value:flash.customer?.firstName, label:"First Name"/}
-		#{inputText name:"customer.lastName", value:flash.customer?.lastName, label:"Last Name"/}
-		#{inputText name:"customer.email", value:flash.customer?.email, label:"Email"/}
-		#{inputText name:"customer.phone", value:flash.customer?.phone,label:"Phone Number"/}
-		<input type="submit" value="Save"/>
+		<legend>Tell us about yourself</legend>
+		#{inputText name:"customer.firstName", value:customer?.firstName, label:"First Name"/}
+		#{inputText name:"customer.lastName", value:customer?.lastName, label:"Last Name"/}
+		#{inputText name:"customer.email", value:customer?.email, label:"Email"/}
+		#{inputText name:"customer.phone", value:customer?.phone,label:"Phone Number"/}
+		<div class="form-actions">
+		<input type="submit" class="btn btn-large btn-primary" value="Save and move on"/>
+		<a href="@{Site.index()}" class="btn btn-large">Cancel</a>
+		</div>
 	#{/form}
-</div>	
+	</div>
+
 </div>

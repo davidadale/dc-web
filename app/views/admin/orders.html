@@ -1,0 +1,20 @@
+#{extends 'site.html'/}
+
+<table class="table">
+	<thead>
+		<tr>
+			<th>Order Number</th>
+			<th>Type</th>
+			<th>Plan</th>
+		</tr>	
+	</thead>	
+	<tbody>
+	#{list items:orders, as:'order'}
+	<tr>
+		<td>${order.orderNumber}</td>
+		<td>${order.type}</td>
+		<td>${order.plan}</td>
+	</tr>
+	#{/list}
+	</tbody>
+</table>

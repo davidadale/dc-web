@@ -24,6 +24,11 @@ public class Security extends Secure.Security {
             return false;
         }*/
         return true;
-    }       
+    }      
+    
+
+    static void onDisconnected(){
+        Site.index();
+    } 
     
 }

@@ -1,7 +1,7 @@
 #{extends 'site.html'/}
 
 #{form @Orders.saveOrderInfo() }
-
+    <legend>Tell us about your machine</legend>
     #{select name:"order.type",label:'Type of Machine', value:flash.order?.type, 
         values:['LAPTOP','DESKTOP'],
         labels:['Laptop','Desktop'] /}
@@ -13,7 +13,9 @@
     #{select name:"order.plan",label:'Cleaning Plan', value:flash.order?.plan, 
         values:['SILVER','GOLD','PLATINUM'],
         labels:['Silver Plan ( 20 Gigabytes )','Gold Plan','Platinum Plan'] /}
-
-        <input type="submit" value="Save"/>
+        <div class="form-actions">
+            <input type="submit" class="btn btn-large btn-primary" value="Save and move on"/>
+            <a href="@{Site.index()}" class="btn btn-large">Cancel</a>
+        </div>
 
 #{/form}

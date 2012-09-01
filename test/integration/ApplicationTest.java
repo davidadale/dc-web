@@ -9,26 +9,32 @@ import java.util.Map;
 import models.Item;
 import org.junit.*;
 import play.db.jpa.JPA;
+import javax.persistence.EntityTransaction;
 import play.mvc.Http.Response;
 import play.test.*;
+
+import models.*;
 
 public class ApplicationTest extends FunctionalTest {
 
     @Before
     public void setUp(){
-        
+        //JPA.em().getTransaction().setRollbackOnly();
    }
     
     @After
     public void tearDown(){
-        JPA.em().getTransaction().rollback();
+        //EntityTransaction trans = JPA.em().getTransaction();
+        //if( trans != null && trans.isActive() ){
+        //    trans.rollback();
+        //}
     }
-    
+
     
     @Test
     public void testTheHomePage() throws IOException{
         
-        JPA.em().getTransaction().setRollbackOnly();    
+         
  
         Map<String,String> params = new HashMap<String,String>();
         params.put("width", "400");
@@ -65,6 +71,12 @@ public class ApplicationTest extends FunctionalTest {
         assertTrue( photo.get("created").dateValue().equals( date.getTime() ) );
         
         
+    }
+
+
+    @Test public void testOrderNumber(){
+        //JPA.em().getTransaction().setRollbackOnly();
+        assertTrue( OrderNumber.next().length() == 10 );
     }
          
     

@@ -15,6 +15,11 @@ GET     /billing                                Orders.billing
 GET     /shipping                               Orders.shipping
 GET     /shipper                                Orders.shipper
 
+GET		/label									Orders.label								
+GET		/customers								Admin.customers
+GET		/orders/{custId}                  		Admin.orders
+GET		/customer/{id}/delete					Admin.deleteCustomer
+
 POST    /api/song                               Api.addSong
 POST    /api/document                           Api.addDocument
 POST    /api/photo                              Api.addPhoto(format:'json')
@@ -28,7 +33,7 @@ GET     /favicon.ico                            404
 GET     /public/                                staticDir:public
 
 # Import Secure routes
-*      /                module:secure
+*      /                						module:secure
 
 # Catch all
 *       /{controller}/{action}                  {controller}.{action}

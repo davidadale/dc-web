@@ -1,0 +1,32 @@
+#{extends 'site.html'/}
+
+
+<table class="table">
+	<thead>
+		<tr>
+			<th>First Name</th>
+			<th>Last Name</th>
+			<th>Email</th>
+			<th>Phone</th>
+			<th></th>
+		</tr>
+	</thead>	
+	<tbody>
+		#{list items:customers, as:'customer'}
+		<tr>
+			<td><a href="@{Admin.orders(customer.id)}">${customer.firstName}</a></td>
+			<td>${customer.lastName}</td>
+			<td>${customer.email}</td>
+			<td>${customer.phone}</td>
+			<td><a href="@{Admin.deleteCustomer(customer.id)}">Delete</a></td>
+		</tr>
+		#{/list}
+	</tbody>
+</table>	
+
+
+<ul>
+	#{list items:customers, as:'customer'}
+	<li>${customer.firstName}</li>
+	#{/list}
+</ul>	
