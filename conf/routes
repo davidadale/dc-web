@@ -9,11 +9,13 @@ POST    /order/create                           Orders.saveCustomerInfo
 POST    /order/info                             Orders.saveOrderInfo
 POST    /order/billing                          Orders.saveBillingInfo
 POST    /order/shipping                         Orders.saveShippingInfo                 
+GET		/order/cancel							Orders.cancel
 GET     /order/{id}                             Orders.show
 POST    /order                                  Orders.saveOrderInfo
 GET     /billing                                Orders.billing
 GET     /shipping                               Orders.shipping
 GET     /shipper                                Orders.shipper
+
 
 GET		/label									Orders.label								
 GET		/customers								Admin.customers

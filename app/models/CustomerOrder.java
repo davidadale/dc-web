@@ -9,11 +9,11 @@ import play.db.jpa.*;
 @Entity
 public class CustomerOrder extends Model{
  
-    public enum DisposalMethod{MAGNETIC,PHYSICAL,RETURN;}
+    public enum DisposalMethod{MAGNETIC,PHYSICAL,RETURN}
     
-    public enum Type{LAPTOP,DESKTOP;}
+    public enum Type{LAPTOP,DESKTOP}
     
-    public enum Plan{SILVER,GOLD,PLATINUM;}
+    public enum Plan{SILVER,GOLD,PLATINUM}
  
     public Date created;
  

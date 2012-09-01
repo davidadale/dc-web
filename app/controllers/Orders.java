@@ -17,9 +17,21 @@ public class Orders extends Controller{
     * Fill out the customer general information
     */
     public static void create(){
-        renderTemplate("orders/customer.html");
+        Customer customer = null;
+        
+        if( CustomerId.present() ){ // should be some time limit applied here.
+            customer = Customer.findById( CustomerId.get() );    
+        }
+        
+        renderTemplate("orders/customer.html",customer);
     }
     
+    public static void cancel(){
+        session.clear();
+        Site.index();
+    }
+
+
     /**
     * Save customer informatmion and create a new CustomerOrder
     */
@@ -29,12 +41,16 @@ public class Orders extends Controller{
             renderTemplate("orders/customer.html", customer);
         }    
 
-        if( customer.alreadyRegistered() ){
-            throw new UserAlreadyRegisteredException();
+        if( CustomerId.not( customer ) ){
+
+            if( customer.alreadyRegistered() ){
+                throw new UserAlreadyRegisteredException();
+            }
+
+            customer.save();        
+            CustomerId.put( customer.id );
         }
 
-        customer.save();        
-        CustomerId.put( customer.id );
         CustomerOrder order = new CustomerOrder();        
         renderTemplate( "orders/order.html", order );
     }
