@@ -75,18 +75,25 @@ public class Orders extends Controller{
         order.save();
         OrderId.put( order.id );
 
-        renderTemplate( "orders/payment.html" );
+        renderTemplate( "orders/card.html" );
     }
 
-    public static void savePaymentInfo(@Valid Payment payment){
+    public static void saveCardInfo(@Valid Card card){
 
         if( validation.hasErrors() ){
-            renderTemplate("orders/payment.html");
+            renderTemplate("orders/card.html");
         }
-
-        payment.save();
+        Customer customer = Customer.findById( CustomerId.get() );
+        CustomerOrder order = CustomerOrder.findById( OrderId.get() );
+        card.customer = customer;
+        card.order = order;
+        card.save();
 
         thankYou();
+    }
+
+    public static void confirmCharge(){
+        render()
     }
 
     

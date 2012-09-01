@@ -18,3 +18,22 @@
 	#{/list}
 	</tbody>
 </table>
+
+<table class="table">
+	<thead>
+		<tr>
+			<th>Payment Token</th>
+			<th>Created</th>
+			<th>Order Number</th>
+		</tr>	
+	</thead>	
+	<tbody>
+	#{list items:payments, as:'payment'}
+	<tr>
+		<td>${payment.token}</td>
+		<td>${payment.created}</td>
+		<td>${payment.order.orderNumber}</td>
+	</tr>
+	#{/list}
+	</tbody>
+</table>

@@ -12,6 +12,7 @@ POST	/order/payment							Orders.savePaymentInfo
 POST    /order/billing                          Orders.saveBillingInfo
 POST    /order/shipping                         Orders.saveShippingInfo                 
 GET		/order/cancel							Orders.cancel
+GET		/order/thanks							Orders.thankYou
 GET     /order/{id}                             Orders.show
 POST    /order                                  Orders.saveOrderInfo
 GET     /billing                                Orders.billing
