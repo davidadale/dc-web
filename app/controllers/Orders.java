@@ -13,6 +13,11 @@ public class Orders extends Controller{
         
     }
     
+    public static void start(){
+        session.clear();
+        create();
+    }
+
     /**
     * Fill out the customer general information
     */
@@ -26,6 +31,9 @@ public class Orders extends Controller{
         renderTemplate("orders/customer.html",customer);
     }
     
+    /**
+    * Cancel the current order by clearing session data.
+    */
     public static void cancel(){
         session.clear();
         Site.index();
@@ -67,9 +75,20 @@ public class Orders extends Controller{
         order.save();
         OrderId.put( order.id );
 
-        Billing billing = new Billing(true);
-        renderTemplate("orders/billing.html", billing );
+        renderTemplate( "orders/payment.html" );
     }
+
+    public static void savePaymentInfo(@Valid Payment payment){
+
+        if( validation.hasErrors() ){
+            renderTemplate("orders/payment.html");
+        }
+
+        payment.save();
+
+        thankYou();
+    }
+
     
     public static void saveBillingInfo(@Valid Billing billing ){
         
@@ -100,6 +119,11 @@ public class Orders extends Controller{
         }
         shipping.save();
         createShipper();
+    }
+
+    public static void thankYou(){
+        CustomerOrder order = CustomerOrder.findById( OrderId.get() );
+        renderTemplate("orders/thankYou.html", order );
     }
 
     @Catch(UserAlreadyRegisteredException.class)

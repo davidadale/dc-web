@@ -4,9 +4,11 @@
 
 # Home page
 GET     /                                       Site.index
+GET		/order/start							Orders.start
 GET     /order/create                           Orders.create
 POST    /order/create                           Orders.saveCustomerInfo
 POST    /order/info                             Orders.saveOrderInfo
+POST	/order/payment							Orders.savePaymentInfo
 POST    /order/billing                          Orders.saveBillingInfo
 POST    /order/shipping                         Orders.saveShippingInfo                 
 GET		/order/cancel							Orders.cancel
