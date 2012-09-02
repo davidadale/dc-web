@@ -1,8 +1,9 @@
 package models;
 
+import filter.Pad;
+
 import javax.persistence.*;
 import play.db.jpa.*;
-import filter.Pad;
 
 @Entity
 public class OrderNumber extends Model{

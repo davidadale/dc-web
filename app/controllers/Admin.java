@@ -15,8 +15,8 @@ public class Admin extends Controller{
 	public static void orders(Long custId){
 		Customer customer = Customer.findById( custId );
 		List<CustomerOrder> orders = CustomerOrder.find("byCustomer", customer).fetch();
-		List<Payment>	payments = Payment.find("byCustomer", customer).fetch();
-		renderTemplate("admin/orders.html",orders,payments);
+		List<Card> cards = Card.find("byCustomer", customer).fetch();
+		renderTemplate("admin/orders.html",orders,cards);
 	}
 
 

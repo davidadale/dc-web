@@ -3,6 +3,7 @@ package controllers;
 import filter.*;
 import models.*;
 import exception.*;
+import java.math.BigDecimal;
 import play.data.validation.*;
 import play.mvc.*;
 
@@ -14,21 +15,9 @@ public class Orders extends Controller{
     }
     
     public static void start(){
+        // start with a clear session.
         session.clear();
         create();
-    }
-
-    /**
-    * Fill out the customer general information
-    */
-    public static void create(){
-        Customer customer = null;
-        
-        if( CustomerId.present() ){ // should be some time limit applied here.
-            customer = Customer.findById( CustomerId.get() );    
-        }
-        
-        renderTemplate("orders/customer.html",customer);
     }
     
     /**
@@ -39,9 +28,26 @@ public class Orders extends Controller{
         Site.index();
     }
 
+    /**
+    * Fill out the customer general information
+    */
+    public static void create(){
+    
+        Customer customer = null;
+        
+        // see if the customer informatmion is already filled in
+        if( CustomerId.present() ){ // should be some time limit applied here.
+            customer = Customer.findById( CustomerId.get() );    
+        }
+        
+        renderTemplate("orders/customer.html",customer);
+    }
+    
+
+
 
     /**
-    * Save customer informatmion and create a new CustomerOrder
+    * Save customer information and create a new CustomerOrder
     */
     public static void saveCustomerInfo(@Valid Customer customer){
         
@@ -89,11 +95,20 @@ public class Orders extends Controller{
         card.order = order;
         card.save();
 
+        Cashier.get().makePayment(card, BigDecimal.ZERO);
+        
         thankYou();
     }
 
     public static void confirmCharge(){
-        render()
+        
+        CustomerOrder order = CustomerOrder.findById( OrderId.get() );
+        Card card = Card.find("byOrder", order ).first();
+        Cashier.get().makePayment( card, order.getTotal() ).save();
+        
+        
+        
+        render();
     }
 
     

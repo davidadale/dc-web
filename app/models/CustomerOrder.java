@@ -1,5 +1,6 @@
 package models;
 
+import java.math.BigDecimal;
 import java.util.Date;
 import java.util.UUID;
 import javax.persistence.*;
@@ -13,7 +14,7 @@ public class CustomerOrder extends Model{
     
     public enum Type{LAPTOP,DESKTOP}
     
-    public enum Plan{SILVER,GOLD,PLATINUM}
+    public enum Plan{SILVER,GOLD,PLATINUM}//SILVER is inluded, GOLD 80 GB $30, Platinum 200 GB $75 
  
     public Date created;
  
@@ -43,6 +44,37 @@ public class CustomerOrder extends Model{
     
     public void createOrderNumber(){
         orderNumber = UUID.randomUUID().toString();
+    }
+    
+    
+    public BigDecimal getDisposalCost(){
+        switch(disposalMethod){
+            case PHYSICAL:
+                return new BigDecimal("5.00");
+            case RETURN:
+                return new BigDecimal("40.00");
+            default:
+                return new BigDecimal("0.00");
+        }        
+    }
+    
+    public BigDecimal getPlanCost(){
+        switch(plan){
+            case GOLD:
+                return new BigDecimal("30.00");                
+            case PLATINUM:    
+                return new BigDecimal("75.00");
+            default:
+                return new BigDecimal("0.00");
+        }
+    }
+    
+    
+    public BigDecimal getTotal(){
+        BigDecimal total = new BigDecimal("29.99")
+        .add( getPlanCost() )
+        .add( getDisposalCost() );
+        return total;
     }
     
     /*public Order(){
