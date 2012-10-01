@@ -6,6 +6,7 @@ import exception.*;
 import java.math.BigDecimal;
 import play.data.validation.*;
 import play.mvc.*;
+import static play.Logger.*;
 
 @SuppressWarnings("static-access")
 public class Orders extends Controller{
@@ -84,10 +85,15 @@ public class Orders extends Controller{
         renderTemplate( "orders/card.html" );
     }
 
+    public static void showCardForm(){
+        renderTemplate("orders/card.html");
+    }
+
     public static void saveCardInfo(@Valid Card card){
 
         if( validation.hasErrors() ){
-            renderTemplate("orders/card.html");
+info( "there are errors on the form." );
+            renderTemplate("orders/card.html", card);
         }
         Customer customer = Customer.findById( CustomerId.get() );
         CustomerOrder order = CustomerOrder.findById( OrderId.get() );
@@ -95,20 +101,20 @@ public class Orders extends Controller{
         card.order = order;
         card.save();
 
-        Cashier.get().makePayment(card, BigDecimal.ZERO);
+        //Cashier.get().makePayment(card, BigDecimal.ZERO);
         
-        thankYou();
+        confirmCharge();
     }
 
     public static void confirmCharge(){
-        
         CustomerOrder order = CustomerOrder.findById( OrderId.get() );
-        Card card = Card.find("byOrder", order ).first();
-        Cashier.get().makePayment( card, order.getTotal() ).save();
-        
-        
-        
-        render();
+        renderTemplate("orders/confirm.html",order);
+    }
+
+    public static void charge(){
+        CustomerOrder order = CustomerOrder.findById( OrderId.get() );
+        Card card = Card.find("byOrder", order).first() ;
+        Cashier.get().makePayment( card, order.getTotal() );
     }
 
     

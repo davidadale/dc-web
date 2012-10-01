@@ -16,12 +16,14 @@ public class CustomerCharge extends Model{
     
     public String chargeId;
     public Card card;
+    public Customer customer;
     
     public CustomerCharge(){}
     
     public CustomerCharge(String chargeId, Card card){
         this.chargeId = chargeId;
         this.card = card;
+        this.customer = card.customer;
     }
     
 }
