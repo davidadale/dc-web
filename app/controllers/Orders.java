@@ -92,8 +92,8 @@ public class Orders extends Controller{
     public static void saveCardInfo(@Valid Card card){
 
         if( validation.hasErrors() ){
-info( "there are errors on the form." );
-            renderTemplate("orders/card.html", card);
+            validation.keep();
+            renderTemplate("orders/card.html");
         }
         Customer customer = Customer.findById( CustomerId.get() );
         CustomerOrder order = CustomerOrder.findById( OrderId.get() );

@@ -56,7 +56,11 @@
             </div>
           </div>
         </div>
-
+        #{if flash.error}
+        <div class="alert">
+          ${flash.error}
+        </div>
+        #{/if}
         <div class="container">
     
             #{doLayout /}
