@@ -28,7 +28,8 @@ GET		/customers								Admin.customers
 GET		/orders/{custId}                  		Admin.orders
 GET		/customer/{id}/delete					Admin.deleteCustomer
 
-POST    /api/song                               Api.addSong
+GET		/api/song 								Api.addSong
+POST    /api/song                               Api.addSong(format:'json')
 POST    /api/document                           Api.addDocument
 POST    /api/photo                              Api.addPhoto(format:'json')
 POST    /api/order/item                         Api.addItem

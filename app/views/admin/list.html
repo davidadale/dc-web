@@ -18,7 +18,10 @@
 			<td>${customer.lastName}</td>
 			<td>${customer.email}</td>
 			<td>${customer.phone}</td>
-			<td><a href="@{Admin.deleteCustomer(customer.id)}">Delete</a></td>
+			<td>
+				<a href="@{Admin.deleteCustomer(customer.id)}">Delete</a>
+				<a href="@{Client.show(customer.id)}">Show</a>
+			</td>
 		</tr>
 		#{/list}
 	</tbody>

@@ -41,12 +41,16 @@ public class Api extends Controller  {
             String album, 
             String track ){
         
-        Item song = new Item( orderNo, contentType, identifier );
+        CustomerOrder order = CustomerOrder.find("byOrderNumber", orderNo ).first();
+
+        Item song = new Item( order.customer, orderNo, contentType, identifier );
         song.set(Item.TITLE ,title);
         song.set(Item.ALBUM, album);
         song.set(Item.TRACK, track);
         song.save();
-        
+        System.out.println( "Song save just called........");
+        List<Item> items = Item.find("customer = ? order by created", order.customer).fetch();
+        System.out.println( "Song list =============> " + items );
         renderJSON( song );
         
     }
@@ -59,13 +63,9 @@ public class Api extends Controller  {
             Integer width,
             Integer height,
             Date created){
-        
-        //JPA.setRollbackOnly();
-        
-        if(Validation.hasErrors() ){
-            error( 400 , getErrorsAsJson( validation.errorsMap() ) );
-        }
-        
+
+        CustomerOrder order = CustomerOrder.find("byOrderNumber", orderNo ).first();
+
         Validation.required("orderNo" ,orderNo);
         Validation.required("contentType" ,contentType);
         Validation.required("identifier" ,identifier);
@@ -77,12 +77,11 @@ public class Api extends Controller  {
             error( 400, getErrorsAsJson( validation.errorsMap() ) );
         }
         
-        Item photo = new Item(orderNo, contentType, identifier);
+        Item photo = new Item( order.customer, orderNo, contentType, identifier);
         photo.set(Item.DESCRIPTION, description );
         photo.set(Item.WIDTH, width );
         photo.set(Item.HEIGHT, height );
         photo.set(Item.CREATED, created );
-        
         
         photo.save();
 
@@ -99,8 +98,9 @@ public class Api extends Controller  {
             String modified,
             String created){
         
-        
-        Item doc = new Item( orderNo, contentType, identifier );
+        CustomerOrder order = CustomerOrder.find("byOrderNumber", orderNo ).first();
+
+        Item doc = new Item( order.customer, orderNo, contentType, identifier );
         doc.set(Item.TITLE, title);
         doc.set(Item.AUTHOR, author);
         doc.set(Item.MODIFIED, modified);

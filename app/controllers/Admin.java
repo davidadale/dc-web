@@ -37,12 +37,6 @@ public class Admin extends Controller{
 			b.delete();
 		} 
 
-
-		List<Card> cards = Card.find("byCustomer",customer).fetch();
-		for( Card c: cards ){
-			c.delete();
-		}
-
 		List<CustomerOrder> orders = CustomerOrder.find("byCustomer", customer).fetch();
 		for(CustomerOrder o: orders){
 			o.delete();
