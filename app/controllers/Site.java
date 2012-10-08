@@ -7,14 +7,17 @@ package controllers;
 import play.mvc.Controller;
 
 /**
- *
+ * Non secure site controller.
  * @author daviddale
  */
 public class Site extends Controller {
     
-    
-    public static void index(){
-        render();
+    /**
+     * This method is the for pulling up the home page of the non-secure
+     * drive-cleaners site.
+     */
+	public static void index(){
+        renderTemplate("site/index.html");
     }
     
 }

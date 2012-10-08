@@ -8,13 +8,26 @@ import play.data.validation.*;
 import play.mvc.*;
 import static play.Logger.*;
 
+/**
+ * This controller handles creating new users by handling the
+ * sign up process.
+ */
 @SuppressWarnings("static-access")
 public class Orders extends Controller{
     
+    /**
+     * Currently not used. This method could be used
+     * to list all orders in the system or by customer.
+     */
     public static void list(){
         
     }
     
+    /**
+     * This method starts a new customer order process
+     * by clearing the session and then calling the create
+     * method.
+     */
     public static void start(){
         // start with a clear session.
         session.clear();
@@ -30,17 +43,15 @@ public class Orders extends Controller{
     }
 
     /**
-    * Fill out the customer general information
+    * Fill out the customer general information starting the customer 
+    * sign up process. The sesssion 
     */
     public static void create(){
-    
         Customer customer = null;
-        
         // see if the customer informatmion is already filled in
         if( CustomerId.present() ){ // should be some time limit applied here.
             customer = Customer.findById( CustomerId.get() );    
         }
-        
         renderTemplate("orders/customer.html",customer);
     }
     
@@ -54,14 +65,12 @@ public class Orders extends Controller{
         
         if( validation.hasErrors() ){
             renderTemplate("orders/customer.html", customer);
-        }    
+        }
 
         if( CustomerId.not( customer ) ){
-
             if( customer.alreadyRegistered() ){
                 throw new UserAlreadyRegisteredException();
             }
-
             customer.save();        
             CustomerId.put( customer.id );
         }
@@ -100,9 +109,6 @@ public class Orders extends Controller{
         card.customer = customer;
         card.order = order;
         card.save();
-
-        //Cashier.get().makePayment(card, BigDecimal.ZERO);
-        
         confirmCharge();
     }
 
