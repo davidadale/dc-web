@@ -1,0 +1,29 @@
+#{extends 'site.html'/}
+
+<table class="table">
+	<thead>
+		<tr>
+			<th>Charge</th>
+			<th>Amount</th>
+		</tr>
+	</thead>
+	<tbody>
+		<tr>
+			<td>Drive cleaners plan</td>
+			<td>${order.getPlanCost()}</td>
+		</tr>
+		<tr>
+			<td>Harddrive disposal method</td>
+			<td>${order.getDisposalCost()}</td>
+		</tr>		
+		<tr>
+			<td>Total cost</td>
+			<td>${order.getTotal()}</td>
+		</tr>		
+	</tbody>
+</table>	
+<form action="@{Orders.charge}" method="POST">
+<button class="btn btn-large btn-primary" type="submit">Confirm</button>
+</form>	
+
+

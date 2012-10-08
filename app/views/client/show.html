@@ -1,0 +1,34 @@
+#{extends 'client.html'/}
+
+<div class="navbar">
+	<div class="navbar-inner">
+<ul class="nav">
+  <li class="active">
+    <a href="#">Documents</a>
+  </li>
+  <li><a href="#">Pictures</a></li>
+  <li><a href="#">Music</a></li>
+  <li><a href="#">Videos</a></li>
+</ul>
+	</div>
+</div>
+<table class="table">
+<thead>
+	<tr>
+		<th><input type="checkbox" /></th>
+		<th></th>
+		<th></th>
+	</tr>
+</thead>	
+<tbody>	
+#{list items:items,as:'item'}
+	<tr>
+		<td><input type="checkbox" /></td>
+		<td>${item.contentType}</td>
+		<td> File name that may be really long.doc</td>
+	</tr>	
+#{/list}
+</tbody>
+</table>
+
+${items}
