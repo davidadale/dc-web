@@ -11,14 +11,13 @@ package controllers;
  */
 public class Security extends Secure.Security {
 
-    @Override
+
     static boolean authenticate(String username, String password) {
         //User user = User.find("byEmail", username).first();
         //return user != null && user.password.equals(password);
         return true;
     }    
 
-    @Override
     static boolean check(String profile) {
         /*User user = User.find("byEmail", connected()).first();
         if ("administrator".equals(profile)) {
@@ -30,7 +29,6 @@ public class Security extends Secure.Security {
         return true;
     }      
     
-    @Override
     static void onDisconnected(){
         Site.index();
     } 
