@@ -11,9 +11,9 @@
   </div>
   <div class="form-row">
     <label>Expiration (MM/YYYY)</label>
-    <input type="text" size="2" class="card-expiry-month"/>
+    <input type="text" size="2" maxlength="2" class="card-expiry-month"/>
     <span> / </span>
-    <input type="text" size="4" class="card-expiry-year"/>
+    <input type="text" size="4" maxlength="4" class="card-expiry-year"/>
   </div>
   <button type="submit" class="submit-button">Submit Payment</button>
 </form>
@@ -42,7 +42,7 @@
       });
   });
   function stripeResponseHandler(status, response) {
-    alert("respnose handler called");
+    alert("respnose handler called " + response.id);
     if (response.error) {
         // show the errors on the form
         $(".payment-errors").text(response.error.message);
@@ -52,7 +52,7 @@
         // token contains id, last4, and card type
         var token = response['id'];
         // insert the token into the form so it gets submitted to the server
-        form$.append("<input type='hidden' name='payment.token' value='" + token + "'/>");
+        form$.append("<input type='hidden' name='card.token' value='" + token + "'/>");
         // and submit
         form$.get(0).submit();
     }

@@ -27,15 +27,16 @@ public class Admin extends Controller{
 	public static void deleteCustomer(Long id){
 		Customer customer = Customer.findById( id );
 
+		List<Card> cards = Card.find("byCustomer",customer).fetch();
+		for(Card card: cards){
+			card.delete();
+		}
+
 		List<Billing> billingAddresses = Billing.find("byCustomer", customer).fetch();
 		for(Billing b: billingAddresses){
 			b.delete();
 		} 
 
-		/*List<Shipping> shipping = Shipping.find("byCustomer",customer).fetch();
-		for( Shipping s: shipping ){
-			s.delete();
-		}*/
 
 		List<Card> cards = Card.find("byCustomer",customer).fetch();
 		for( Card c: cards ){

@@ -6,6 +6,7 @@ import exception.*;
 import java.math.BigDecimal;
 import play.data.validation.*;
 import play.mvc.*;
+import static play.Logger.*;
 
 /**
  * This controller handles creating new users by handling the
@@ -93,6 +94,10 @@ public class Orders extends Controller{
         renderTemplate( "orders/card.html" );
     }
 
+    public static void showCardForm(){
+        renderTemplate("orders/card.html");
+    }
+
     public static void saveCardInfo(@Valid Card card){
 
         if( validation.hasErrors() ){
@@ -104,16 +109,18 @@ public class Orders extends Controller{
         card.customer = customer;
         card.order = order;
         card.save();
-        //Cashier.get().makePayment( card, order.getTotal() );
-        thankYou();
+        confirmCharge();
     }
 
     public static void confirmCharge(){
-        
         CustomerOrder order = CustomerOrder.findById( OrderId.get() );
-        Card card = Card.find("byOrder", order ).first();
-        Cashier.get().makePayment( card, order.getTotal() ).save();
-        render();
+        renderTemplate("orders/confirm.html",order);
+    }
+
+    public static void charge(){
+        CustomerOrder order = CustomerOrder.findById( OrderId.get() );
+        Card card = Card.find("byOrder", order).first() ;
+        Cashier.get().makePayment( card, order.getTotal() );
     }
 
     
