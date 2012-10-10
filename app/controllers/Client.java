@@ -9,7 +9,7 @@ public class Client extends Controller{
 	public static void show( Long customerId ){
 		Customer customer = Customer.findById(customerId);//customer = ? order by created
 		List<Item> items = Item.find("byCustomer", customer).fetch();
-		render( customer, items );
+		renderTemplate("client/show.html" customer, items );
 	}
 
 }
