@@ -22,7 +22,8 @@ GET     /billing                                Orders.billing
 GET     /shipping                               Orders.shipping
 GET     /shipper                                Orders.shipper
 
-
+GET     /test                                   Label.test
+GET     /barcode                                Label.barcode
 GET		/label									Orders.label								
 GET		/customers								Admin.customers
 GET		/orders/{custId}                  		Admin.orders

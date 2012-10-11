@@ -8,4 +8,6 @@ require:
     - com.stripe -> stripe-java 1.1.2
     - com.itextpdf -> itextpdf 5.3.2
     - com.itextpdf.tool -> xmlworker 1.1.6 
+    - com.google.zxing -> core 2.0
+    - com.google.zxing -> javase 2.0
     - junit -> junit 4.11
