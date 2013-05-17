@@ -1,18 +1,19 @@
 #{extends 'site.html'/}
 
-<div class="row-fluid">
-	<div class="span5">
-	#{form @Orders.saveCustomerInfo() }
-		<legend>Tell us about yourself</legend>
-		#{inputText name:"customer.firstName", value:customer?.firstName, label:"First Name"/}
-		#{inputText name:"customer.lastName", value:customer?.lastName, label:"Last Name"/}
-		#{inputText name:"customer.email", value:customer?.email, label:"Email"/}
-		#{inputText name:"customer.phone", value:customer?.phone,label:"Phone Number"/}
-		<div class="form-actions">
-		<input type="submit" class="btn btn-large btn-primary" value="Save and move on"/>
-		<a href="@{Orders.cancel()}" class="btn btn-large">Cancel</a>
-		</div>
-	#{/form}
+<div class="span5">
+#{form @Orders.saveCustomerInfo() }
+	<legend>Tell us about yourself</legend>
+	#{inputText name:"customer.firstName", value:customer?.firstName, label:"First Name"/}
+	#{inputText name:"customer.lastName", value:customer?.lastName, label:"Last Name"/}
+	#{inputText name:"customer.email", value:customer?.email, label:"Email"/}
+	#{inputText name:"customer.phone", value:customer?.phone,label:"Phone Number"/}
+	<div class="form-actions">
+	<input type="submit" class="btn btn-large btn-primary" value="Save and move on"/>
+	<a href="@{Orders.cancel()}" class="btn btn-large">Cancel</a>
 	</div>
-
+#{/form}
 </div>
+<script>
+	$("input[name='customer.firstName']").focus()
+</script>
+

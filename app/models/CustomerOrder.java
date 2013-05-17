@@ -15,6 +15,10 @@ public class CustomerOrder extends Model{
     public enum Type{LAPTOP,DESKTOP}
     
     public enum Plan{SILVER,GOLD,PLATINUM}//SILVER is inluded, GOLD 80 GB $30, Platinum 200 GB $75 
+
+    public enum Status{WAITING,RECEIVED,STARTED,COMPLETE,CANCELED}
+
+    public enum Os{MAC,WINDOWS,LINUX}
  
     public Date created;
  
@@ -26,6 +30,11 @@ public class CustomerOrder extends Model{
     
     @Required
     public Plan plan;
+
+    @Required
+    public Os system;
+
+    public Status status;   
     
     public boolean shipSame;
 
@@ -34,13 +43,29 @@ public class CustomerOrder extends Model{
     
     @ManyToOne
     public Shipping shipping;
-    
+
     @ManyToOne
     public Customer customer;
     
-    
+    public Long customerId;    
+
     public String orderNumber;
+
     
+    public CustomerOrder(){
+        created = new Date();
+    }
+
+    public void updateFrom(CustomerOrder order){
+        if( order.created!=null ){ created = order.created;}
+        if( order.type!=null){ type=order.type;}
+        if( order.disposalMethod!=null ){disposalMethod=order.disposalMethod;}
+        if( order.plan!=null ){plan = order.plan;}
+        shipSame = order.shipSame;
+        if( order.billing!=null ){billing=order.billing;}
+        if( order.shipping!=null ){shipping=order.shipping;}
+        if( order.customerId!=null ){customerId=order.customerId;}
+    }
     
     public void createOrderNumber(){
         orderNumber = UUID.randomUUID().toString();

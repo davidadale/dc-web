@@ -1,0 +1,43 @@
+#{extends 'site.html'/}
+<a href="@{Admin.customers()}">Back to customers</a>
+<table class="table">
+	<thead>
+		<tr>
+			<th>Name</th>
+			<th>Phone</th>
+			<th>Email</td>
+		</tr>
+	</thead>
+	<tbody>		
+		<tr>
+			<td>${customer.firstName} ${customer.lastName}</td>
+			<td>${customer.phone}</td>
+			<td>${customer.email}</td>
+		</tr>
+	</tbody>
+</table>	
+<a href="#">Add Order</a>
+<table class="table">
+	<thead>
+		<tr>
+			<th>Order</th>
+			<th>Type</th>
+			<th>Disposal Method</th>
+			<th>Plan</th>
+			<th></th>
+		</tr>
+	</thead>
+	<tbody>		
+		#{list items:orders,as:'order'}
+		<tr>
+			<td>${order.orderNumber}</td>
+			<td>${order.type}</td>
+			<td>${order.disposalMethod}</td>
+			<td>${order.plan}</td>	
+			<td>
+				<a href="#">Edit</a>
+			</td>
+		</tr>	
+		#{/list}
+	</tbody>	
+</table>	

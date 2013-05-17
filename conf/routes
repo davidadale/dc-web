@@ -4,36 +4,53 @@
 
 # Home page
 GET     /                                       Site.index
-GET		/order/new								Orders.start
-GET     /order/customer                         Orders.create
+GET		/forgot									Security.forgotPassword
+POST	/send									Security.sendPasswordReminder
+
+POST	/order									Orders.reset
+GET     /order                         			Orders.showCustomerInfo
 POST    /order/customer                         Orders.saveCustomerInfo
 POST    /order/details                          Orders.saveOrderInfo
-GET		/order/payment                          Orders.showCardForm
+GET		/order/payment                          Orders.showCardInfo
 POST	/order/payment							Orders.saveCardInfo
 GET		/order/confirm							Orders.confirmCharge
 POST	/order/charge                           Orders.charge
-POST    /order/billing                          Orders.saveBillingInfo
-POST    /order/shipping                         Orders.saveShippingInfo                 
 GET		/order/cancel							Orders.cancel
 GET		/order/thanks							Orders.thankYou
-GET     /order/{id}                             Orders.show
-POST    /order                                  Orders.saveOrderInfo
-GET     /billing                                Orders.billing
-GET     /shipping                               Orders.shipping
-GET     /shipper                                Orders.shipper
 
-GET     /test                                   Label.test
-GET     /barcode                                Label.barcode
-GET		/label									Orders.label								
-GET		/customers								Admin.customers
-GET		/orders/{custId}                  		Admin.orders
-GET		/customer/{id}/delete					Admin.deleteCustomer
+GET     /admin   								Admin.index
+GET     /admin/orders 		  					Admin.orders
+POST    /admin/orders  							Admin.saveOrder
+GET     /admin/order 							Admin.createOrder
+GET     /admin/order/{id}  						Admin.showOrder
+POST    /admin/order/{id} 						Admin.editOrder
+GET		/admin/customers						Admin.customers
+POST 	/admin/customers 						Admin.saveCustomer
+GET     /admin/customer 						Admin.createCustomer
+GET		/admin/customer/{id}					Admin.showCustomer
+POST    /admin/customer/{id}   					Admin.editCustomer
+GET		/admin/users							Admin.users
+POST    /admin/users 							Admin.saveUser
+GET		/admin/user 							Admin.createUser
+GET     /admin/user/{id} 						Admin.showUser
+POST    /admin/user/{id}  						Admin.editUser
+GET 	/admin/password/{id}/{timestamp}        Admin.showPasswordReset
+POST    /admin/password/{id}                    Admin.changePassword
 
-GET		/api/song 								Api.addSong
-POST    /api/song                               Api.addSong(format:'json')
-POST    /api/document                           Api.addDocument
-POST    /api/photo                              Api.addPhoto(format:'json')
-POST    /api/order/item                         Api.addItem
+
+
+GET     /client   								Client.index 					
+POST    /api/token  							Api.createToken
+GET		/api/customers							Api.customers
+GET		/api/customer/{id}						Api.customer
+GET		/api/users								Api.users
+GET		/api/user/{id}							Api.user	
+GET		/api/items/{custId}						Api.items
+GET		/api/item/{id}							Api.item
+POST	/api/item 								Api.createItem
+POST	/api/item/{id} 							Api.updateItem
+DELETE  /api/item/{id} 							Api.deleteItem
+GET     /api/order/{orderNumber}   				Api.order
 
 
 # Ignore favicon requests

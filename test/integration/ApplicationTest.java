@@ -15,102 +15,168 @@ import play.test.*;
 import java.util.UUID;
 import java.util.*;
 import models.*;
+import models.CustomerOrder.DisposalMethod;
+import models.CustomerOrder.Type;
+import models.CustomerOrder.Plan;
+
 
 public class ApplicationTest extends FunctionalTest {
 
     @Before
     public void setUp(){
-
-        //CustomerOrder order = CustomerOrder.find("byOrderNumber","123123123123").first();
-        //List<Item> items = Item.find("customer = ? order by created", order.customer).fetch();
-        //System.out.println( "Song list =============> " + items );
-
-        //JPA.em().getTransaction().setRollbackOnly();
         Fixtures.deleteDatabase();
-        Fixtures.loadModels("data.yml");
-        //JPA.em().getTransaction().commit();
-   }
+        Fixtures.loadModels("integration/data.yml");
+    }
     
     @After
     public void tearDown(){
-        //EntityTransaction trans = JPA.em().getTransaction();
-        //if( trans != null && trans.isActive() ){
-        //    trans.rollback();
-        //}
+
     }
 
-    
-    /*@Test
-    public void testTheHomePage() throws IOException{
- 
+    @Test
+    public void test_api_create_customer(){
         Map<String,String> params = new HashMap<String,String>();
-        params.put("width", "400");
-        params.put("height","200");
-        params.put("contentType", "text/json");
-        params.put("orderNo", "12345678");
-        params.put("identifier","123-123-asdf-123");
-        params.put("created","2012-02-14 14:12:00");
+        params.put("customer.firstName","Joe");
+        params.put("customer.lastName","Blo");
+        params.put("customer.email","joeblo@flow7.net");
+        params.put("customer.phone","123-123-1234");
         
-        Response response = POST("/api/photo", params );
+        Response response = POST( "/api/customer", params );
         String json = getContent( response );
-        System.out.println( json );
-        assertStatus(200, response);
         
         GsonBuilder b = new GsonBuilder();
         Gson gson = b.create();
         
-        Item photo = gson.fromJson(json, Item.class);
-        assertTrue( photo.get("width").intValue() == 400 );
-        assertTrue( photo.get("height").intValue() == 200 );
-        assertEquals( photo.contentType,"text/json");
-        assertEquals( photo.orderNumber,"12345678" );
-        assertEquals( photo.identifier,"123-123-asdf-123" );
-        
-        Calendar date = Calendar.getInstance();
-        date.set(Calendar.HOUR_OF_DAY, 0);
-        date.set(Calendar.MILLISECOND, 0);
-        date.set(Calendar.MINUTE,  0);
-        date.set(Calendar.SECOND,  0);
-        date.set(Calendar.MONTH,   1);
-        date.set(Calendar.DATE,   14);
-        date.set(Calendar.YEAR, 2012);
-        
-        assertTrue( photo.get("created").dateValue().equals( date.getTime() ) );
-    }*/
+        Customer customer = gson.fromJson(json, Customer.class); 
+        assertEquals( "Joe", customer.firstName );       
+        assertEquals( "joeblo@flow7.net", customer.email );
 
-    @Test public void test_api_add_song(){
-/*
-            String orderNo,
-            String contentType,
-            String identifier,
-            String title, 
-            String album, 
-            String track 
-*/
+    }
+
+    @Test
+    public void test_api_update_customer(){
+        Customer c = Customer.find("byEmail","johndoe@flow7.net").first();
+        Map<String,String> params = new HashMap<String,String>();
+        params.put("customer.firstName","Jonny");
+
+        Response resp = POST("/api/customer/"+c.id,params);
+        String json = getContent( resp );
+        
+        GsonBuilder b = new GsonBuilder();
+        Gson gson = b.create();
+        
+        Customer customer = gson.fromJson(json, Customer.class); 
+        assertEquals("Jonny", customer.firstName );
+
+    }
+
+    @Test
+    public void test_api_delete_customer(){
+        Customer c = Customer.find("byEmail","johndoe@flow7.net").first();
+        Response resp = DELETE("/api/customer/"+c.id );
+        String json = getContent( resp );
+        assertEquals("{success:true}",json);
+    }
+
+    @Test
+    public void test_api_create_order(){
+        Customer c = Customer.find("byEmail","johndoe@flow7.net").first();
+
+        Map<String,String> params = new HashMap<String,String>();
+        params.put("order.type","LAPTOP");
+        params.put("order.disposalMethod","MAGNETIC");
+        params.put("order.plan","SILVER");
+        params.put("order.customerId", ""+c.id );
+
+        Response resp = POST("/api/order",params);
+        String json = getContent( resp );
+        GsonBuilder b = new GsonBuilder();
+        Gson gson = b.create();
+        CustomerOrder order = gson.fromJson( json, CustomerOrder.class );
+        assertNotNull( order.id );
+    }
+
+    @Test
+    public void test_api_update_order(){
+        CustomerOrder o = CustomerOrder.find("byOrderNumber","123123123123").first();
+        Map<String,String> params = new HashMap<String,String>();
+        params.put("order.type","DESKTOP");
+
+        Response resp = POST("/api/order/"+o.id,params);
+        String json = getContent( resp );
+        GsonBuilder b = new GsonBuilder();
+        Gson gson = b.create();
+        CustomerOrder order = gson.fromJson( json, CustomerOrder.class );
+        assertEquals(Type.DESKTOP,order.type);
+
+    }
+
+    @Test
+    public void test_api_delete_order(){
+        CustomerOrder order = CustomerOrder.find("byOrderNumber","123123123123").first();
+        Response resp = DELETE("/api/order/"+order.id);
+        String json = getContent( resp );
+        assertEquals("{success:true}", json);
+    }
+
+
+    @Test 
+    public void test_api_add_item(){
 
         String identifier = UUID.randomUUID().toString();
 
         Map<String,String> params = new HashMap<String,String>();
-        params.put("orderNo", "123123123123");
-        params.put("contentType","audio");
-        params.put("identifier", identifier);
-        params.put("title", "Standing on the rock");
-        params.put("album","123-123-asdf-123");
-        params.put("track","2012-02-14 14:12:00");
+        params.put("item.orderNumber", "123123123123");
+        params.put("item.contentType","audio");
+        params.put("item.identifier", identifier);
+        params.put("item.title", "Standing on the rock");
+        params.put("item.album","123-123-asdf-123");
+        params.put("item.track","2012-02-14 14:12:00");
 
-        Response response = POST("/api/song", params );
+        Response response = POST("/api/item", params );
         String json = getContent( response );
         System.out.println( json );
         assertStatus(200, response);        
+        
+        GsonBuilder b = new GsonBuilder();
+        Gson gson = b.create();
+        
+        Item song = gson.fromJson(json, Item.class); 
+        //assertEquals("Standing on the rock", song.title);
+        //assertEquals("123-123-asdf-123", song.album);
+        throw new RuntimeException("Fix test");
+    }
 
+    @Test
+    public void test_api_update_item(){
+        // look up item to get id
+        Item item = Item.find("byTitle","Oh Happy Day").first();
+        //assertEquals("Bad Album Name", item.album);
 
+        // perform an update to the album using the API 
+        HashMap<String,String> params = new HashMap<String,String>();
+        params.put("item.album","new album");
+        Response resp = POST("/api/item/"+item.id,params);
+        String json = getContent( resp );
+        GsonBuilder b = new GsonBuilder();
+        Gson gson = b.create();
+
+        // verify the result
+        Item song = gson.fromJson(json,Item.class);
+        //assertEquals("new album",song.album);
+        throw new RuntimeException("Fix test");
+    }
+
+    @Test
+    public void test_api_delete_item(){
+        Item item = Item.find("byTitle","Oh Happy Day").first();
+        Response resp = DELETE("/api/item/"+item.id);
+        String json = getContent(resp);
+        assertEquals("{success:true}",json);
     }
 
 
-    @Test public void testOrderNumber(){
-        //JPA.em().getTransaction().setRollbackOnly();
-        assertTrue( OrderNumber.next().length() == 10 );
-    }
+
          
     
 }

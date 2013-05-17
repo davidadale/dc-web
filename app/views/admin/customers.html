@@ -1,6 +1,13 @@
-#{extends 'site.html'/}
+#{extends 'admin.html'/}
+#{set header:'customers'/}
 
-
+<a href="@{Admin.createCustomer()}">Add Customer</a>
+<div class="span8">
+#{form @Admin.customers()}	
+<input type="text" 
+		name="q" placeholder="Search by name or email"
+		value="${params.q}"/>
+#{/form}
 <table class="table">
 	<thead>
 		<tr>
@@ -14,22 +21,16 @@
 	<tbody>
 		#{list items:customers, as:'customer'}
 		<tr>
-			<td><a href="@{Admin.orders(customer.id)}">${customer.firstName}</a></td>
+			<td>${customer.firstName}</td>
 			<td>${customer.lastName}</td>
 			<td>${customer.email}</td>
 			<td>${customer.phone}</td>
 			<td>
 				<a href="@{Admin.deleteCustomer(customer.id)}">Delete</a>
-				<a href="@{Client.show(customer.id)}">Show</a>
+				<a href="@{Admin.showCustomer(customer.id)}">Show</a>
 			</td>
 		</tr>
 		#{/list}
 	</tbody>
-</table>	
-
-
-<ul>
-	#{list items:customers, as:'customer'}
-	<li>${customer.firstName}</li>
-	#{/list}
-</ul>	
+</table>
+</div>

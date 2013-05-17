@@ -1,4 +1,4 @@
-package filter;
+package cleaners;
 
 import play.mvc.Scope.Session;
 import models.Customer;

@@ -5,7 +5,8 @@
 package controllers;
 
 import play.mvc.Controller;
-
+import cleaners.CustomerId;
+import models.*;
 /**
  * Non secure site controller.
  * @author daviddale
@@ -17,7 +18,13 @@ public class Site extends Controller {
      * drive-cleaners site.
      */
 	public static void index(){
-        renderTemplate("site/index.html");
+		if( CustomerId.present() ){
+			Customer customer = Customer.findById( CustomerId.get() );
+			renderTemplate("site/index.html", customer );
+		}else{
+			renderTemplate("site/index.html");	
+		}
+        
     }
     
 }

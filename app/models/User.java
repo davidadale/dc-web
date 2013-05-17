@@ -8,5 +8,6 @@ public class User extends Model{
     
     public String email;
     public String password;
-    
+    public Boolean isAdmin = Boolean.FALSE;
+    public String verificationToken;
 }

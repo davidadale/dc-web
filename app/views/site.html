@@ -1,75 +1,195 @@
+
 <!DOCTYPE html>
 <html lang="en">
-    <head>
-        <meta charset="utf-8">
-        <title>Bootstrap, from Twitter</title>
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <meta name="description" content="">
-        <meta name="author" content="">        
-        <link href="@{'public/assets/css/bootstrap.css'}" rel="stylesheet">
-        <style type="text/css">
-            body {
-                padding-top: 60px;
-                padding-bottom: 40px;
-            }
-            .sidebar-nav {
-                padding: 9px 0;
-            }
-        </style>
-        <link href="@{'public/assets/css/bootstrap-responsive.css'}" rel="stylesheet">    
-        <link type="text/css" rel="stylesheet" href="@{'public/stylesheets/main.css'}" />        
-        <script src="@{'/public/javascripts/jquery-1.7.2.min.js'}"></script>
-		<script src="@{'/public/assets/js/bootstrap.min.js'}"></script>
-        <!--[if lt IE 9]>
-          <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
-        <![endif]-->    
-    
-    </head>
-    <body>
-       <div class="navbar navbar-inverse navbar-fixed-top">
-          <div class="navbar-inner">
-            <div class="container">
-              <a class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse">
-                <span class="icon-bar"></span>
-                <span class="icon-bar"></span>
-                <span class="icon-bar"></span>
-              </a>
-              <a class="brand" href="#">Drive Cleaners</a>
-              <div class="nav-collapse collapse">
-                <ul class="nav">
-                  <li class="active"><a href="#">Home</a></li>
-                  <li><a href="#about">About</a></li>
-                  <li><a href="#contact">Contact</a></li>
-                  <li class="dropdown">
-                    <a href="#" class="dropdown-toggle" data-toggle="dropdown">Dropdown <b class="caret"></b></a>
-                    <ul class="dropdown-menu">
-                      <li><a href="#">Action</a></li>
-                      <li><a href="#">Another action</a></li>
-                      <li><a href="#">Something else here</a></li>
-                      <li class="divider"></li>
-                      <li class="nav-header">Nav header</li>
-                      <li><a href="#">Separated link</a></li>
-                      <li><a href="#">One more separated link</a></li>
-                    </ul>
-                  </li>
-                </ul>
-              </div><!--/.nav-collapse -->
-            </div>
+  <head>
+    <meta charset="utf-8">
+    <title>Template &middot; Bootstrap</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <link href='http://fonts.googleapis.com/css?family=Racing+Sans+One' rel='stylesheet' type='text/css'>
+    <!-- Le styles -->
+    <link href="@{'public/assets/css/bootstrap.css'}" rel="stylesheet">
+    <style type="text/css">
+      body {
+        padding-top: 20px;
+        padding-bottom: 60px;
+      }
+
+      /* Custom container */
+      .container {
+        margin: 0 auto;
+        max-width: 1000px;
+      }
+      .container > hr {
+        margin: 60px 0;
+      }
+
+      /* Main marketing message and sign up button */
+      .jumbotron {
+        margin: 80px 0;
+        text-align: center;
+      }
+      .jumbotron h1 {
+        font-size: 100px;
+        line-height: 1;
+      }
+      .jumbotron .lead {
+        font-size: 24px;
+        line-height: 1.25;
+      }
+      .jumbotron .btn {
+        font-size: 21px;
+        padding: 14px 24px;
+      }
+
+      /* Supporting marketing content */
+      .marketing {
+        margin: 60px 0;
+      }
+      .marketing p + h4 {
+        margin-top: 28px;
+      }
+
+
+      /* Customize the navbar links to be fill the entire space of the .navbar */
+      .navbar .navbar-inner {
+        padding: 0;
+      }
+      .navbar .nav {
+        margin: 0;
+        display: table;
+        width: 100%;
+      }
+      .navbar .nav li {
+        display: table-cell;
+        width: 1%;
+        float: none;
+      }
+      .navbar .nav li a {
+        font-weight: bold;
+        text-align: center;
+        border-left: 1px solid rgba(255,255,255,.75);
+        border-right: 1px solid rgba(0,0,0,.1);
+      }
+      .navbar .nav li:first-child a {
+        border-left: 0;
+        border-radius: 3px 0 0 3px;
+      }
+      .navbar .nav li:last-child a {
+        border-right: 0;
+        border-radius: 0 3px 3px 0;
+      }
+      h1.logo{
+        font-size:5em;
+        font-family:Racing Sans One;
+      }
+      .dc-art{
+        margin: 40px 0;
+        background-image: url("@{'/public/images/copy5.jpg'}");
+        background-repeat: no-repeat;
+        width:100%px;
+        height:590px;
+      }
+      .login-box{
+        margin: 50px 0;
+        background-color: #fff;
+        border: 1px solid #a0a0a0;        
+        border-radius: 10px;
+        padding: 20px 42px;
+      }
+      .login-box input[type=text],.login-box input[type=password]{
+        font-size: 18px;
+        height:33px;
+        width:299px;
+      }
+      .login-box input[type=submit]{
+        width:295px;
+      }
+      .login-box input.firstName{
+        width: 140px;        
+      }
+      .login-box input.lastName {
+        width: 140px;
+      }
+
+      .login-link{
+        font-size: 18px;
+      }
+
+      .price{
+        font-size: 5em;
+        font-family:Racing Sans One;
+        text-align: right;
+      }
+      .price span{
+        position       : relative;
+        vertical-align : super;   
+        padding-bottom : .38em;
+        background     : #fff; /* this will cover the dot */
+        font-size      : 0.56em;
+      }
+    </style>
+    <link href="@{'public/assets/css/bootstrap-responsive.css'}" rel="stylesheet">
+
+    <!-- HTML5 shim, for IE6-8 support of HTML5 elements -->
+    <!--[if lt IE 9]>
+      <script src="assets/js/html5shiv.js"></script>
+    <![endif]-->
+
+    <!-- Fav and touch icons -->
+    <link rel="apple-touch-icon-precomposed" sizes="144x144" href="assets/ico/apple-touch-icon-144-precomposed.png">
+    <link rel="apple-touch-icon-precomposed" sizes="114x114" href="assets/ico/apple-touch-icon-114-precomposed.png">
+      <link rel="apple-touch-icon-precomposed" sizes="72x72" href="assets/ico/apple-touch-icon-72-precomposed.png">
+                    <link rel="apple-touch-icon-precomposed" href="assets/ico/apple-touch-icon-57-precomposed.png">
+                                   <link rel="shortcut icon" href="assets/ico/favicon.png">
+    <script src="@{'public/assets/js/jquery.js'}"></script>                                   
+  </head>
+
+  <body>
+
+    <div class="container">
+      <a href="#" class="login-link pull-right"
+      data-placement="bottom">Login</a>
+      <h1 class="logo">Drive Cleaners</h1>  
+      <p>The safe way to retrieve your data and clear your drive</p>
+      #{if flash.error}
+      <div class="row">
+        <div class="span8">              
+          <div class="alert">
+            &{flash.error}
           </div>
         </div>
-        #{if flash.error}
-        <div class="alert">
-          ${flash.error}
+      </div>
+      #{/if}
+      #{if flash.success}
+      <div class="row">
+        <div class="span8">              
+          <div class="alert alert-success">
+            &{flash.success}
+          </div>
         </div>
-        #{/if}
-        <div class="container-fluid">
+      </div>
+      #{/if}      
+      #{doLayout /}
+    </div> <!-- /container -->
+
+    <!-- Le javascript
+    ================================================== -->
+    <!-- Placed at the end of the document so the pages load faster -->
     
-            #{doLayout /}
-            
-            <footer>
-                <p>&copy; Company 2012</p>
-            </footer>
-        </div>
-        #{get 'moreScripts' /}
-    </body>
-</html> 
+    <script src="@{'public/assets/js/bootstrap-transition.js'}"></script>
+    <script src="@{'public/assets/js/bootstrap-alert.js'}"></script>
+    <script src="@{'public/assets/js/bootstrap-modal.js'}"></script>
+    <script src="@{'public/assets/js/bootstrap-dropdown.js'}"></script>
+    <script src="@{'public/assets/js/bootstrap-scrollspy.js'}"></script>
+    <script src="@{'public/assets/js/bootstrap-tab.js'}"></script>
+    <script src="@{'public/assets/js/bootstrap-tooltip.js'}"></script>
+    <script src="@{'public/assets/js/bootstrap-popover.js'}"></script>
+    <script src="@{'public/assets/js/bootstrap-button.js'}"></script>
+    <script src="@{'public/assets/js/bootstrap-collapse.js'}"></script>
+    <script src="@{'public/assets/js/bootstrap-carousel.js'}"></script>
+    <script src="@{'public/assets/js/bootstrap-typeahead.js'}"></script>
+    #{get 'moreScripts' /}
+  </body>
+</html>

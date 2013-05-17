@@ -1,4 +1,4 @@
-package filter;
+package cleaners;
 
 import java.util.*;
 
@@ -29,7 +29,7 @@ public class Config{
 		return get().propertyValue( "privateKey" );
 	}
 
-	public static String getPublicKey(){
+	public static String getStripePublicKey(){
 		return get().propertyValue( "publicKey" );
 	}
 

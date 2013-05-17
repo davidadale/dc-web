@@ -1,4 +1,4 @@
-package filter;
+package cleaners;
 
 import com.stripe.Stripe;
 import com.stripe.model.Charge;
@@ -26,21 +26,25 @@ public class Cashier{
 
 	public CustomerCharge makePayment( Card card, BigDecimal amount ){
 		
-		
+		CustomerCharge customerCharge = null;
+
 		Map<String,Object> chargeParams = new HashMap<String,Object>();
 		chargeParams.put( "amount", amount);
 		chargeParams.put( "currency","usd");
 		chargeParams.put( "description","initial charge for getting drive cleaned");
 		chargeParams.put( "card", card.token );
 
-                try{
-                    Charge charge = Charge.create( chargeParams );
-                    return new CustomerCharge(charge.getId(),card);                    
-                }catch(Exception e){
-                    // handle exception
-                }
+        try{
+            
+        	Charge charge = Charge.create( chargeParams );
+            customerCharge = new CustomerCharge( charge.getId(), card );  
+            customerCharge.save();
 
-		return null;
+        }catch(Exception e){
+            // handle exception
+        }
+
+		return customerCharge;
 	}
 
 }

@@ -1,7 +1,6 @@
 #{extends 'site.html'/}
 
-<div class="row-fluid">
-	<div class="span5">
+<div class="span5">
 	#{form @Orders.saveBillingInfo() }
 		<legend>Billing Information</legend>
 	    #{inputText name:"billing.address", value:billing?.address, label:"Address"/}
@@ -12,5 +11,4 @@
 	    #{checkbox name:"billing.shipSame",checkedValue:true, value:billing?.shipSame,label:"Use this address for shipping to."/}
 	    <input type="submit" value="Save"/>
 	#{/form}
-	</div>
 </div>

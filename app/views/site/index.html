@@ -1,7 +1,92 @@
 #{extends 'site.html'/}
+      <div class="dc-art">  
+        <div class="row-fluid">
+          <div class="offset7 span5">
+            <p class="price">$39<span>.99</span></p>
+            <div class="login-box">
+            #{form @Orders.saveCustomerInfo()}	
+              <fieldset>
+                #{ifErrors}
+                  <div class="alert alert-error">
+                    Please fix and retry. All fields are required.
+                  </div>
+                #{/ifErrors}
+                #{else}
+                  <legend>Get your data back now!</legend>      
+                #{/else}                
+                <div>
+                  #{inputText2 placeholder:"First name",
+                      name:"customer.firstName", class:"firstName",
+                      value:customer?.firstName /}
+                  <input placeholder="Last name" type="text" 
+                      name="customer.lastName" class="lastName"
+                      value="${customer?.lastName}"/>
+                </div>
+                <div>
+                  <input placeholder="Email" type="text" name="customer.email"
+                  value="${customer?.email}"/>
+                </div>
+                <div>
+                  <input placeholder="Password" type="password" name="customer.password"
+                  	value="${customer?.password}"/>
+                </div>
+                <input type="hidden" name="customer.id" value="${customer?.id}"/>
+                <input type="submit" class="btn btn-large btn-primary"
+                                value="Continue">
+              </fieldset>
+              #{/form}
+            </div>
+          </div>  
+        </div>
+        
+      </div>
 
-<div class="span12">
-	<h1> Welcome to the first page of Drive Cleaners</h1>
-	<a href="@{Orders.start()}" class="btn btn-large btn-primary">Get Started Now</a>
-	<a href="@{Secure.login()}" class="btn btn-large">Existing Customers Login</a>
-</div>
+      <div id="popover" style="display:none">
+        #{form @Secure.authenticate()}
+        <label>Email</label>
+        <input type='text' name='username'/>
+        <label>Password</label>
+        <input type='password' name='password'/>
+        <input type='submit'/>
+        #{/form}
+      </div>
+
+      <hr>
+
+      <!-- Example row of columns -->
+      <div class="row-fluid">
+        <div class="span4">
+          <h2>Heading</h2>
+          <p>Donec id elit non mi porta gravida at eget metus. Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum massa justo sit amet risus. Etiam porta sem malesuada magna mollis euismod. Donec sed odio dui. </p>
+          <p><a class="btn" href="#">View details &raquo;</a></p>
+        </div>
+        <div class="span4">
+          <h2>Heading</h2>
+          <p>Donec id elit non mi porta gravida at eget metus. Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum massa justo sit amet risus. Etiam porta sem malesuada magna mollis euismod. Donec sed odio dui. </p>
+          <p><a class="btn" href="#">View details &raquo;</a></p>
+       </div>
+        <div class="span4">
+          <h2>Heading</h2>
+          <p>Donec sed odio dui. Cras justo odio, dapibus ac facilisis in, egestas eget quam. Vestibulum id ligula porta felis euismod semper. Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum massa.</p>
+          <p><a class="btn" href="#">View details &raquo;</a></p>
+        </div>
+      </div>
+
+      <hr>
+
+      <div class="footer">
+        <p>&copy; Company 2013</p>
+      </div>
+
+      <script>
+        $(function(){
+
+          $('.login-link').popover( { 
+            html : true,
+            content: function() {
+              return $('#popover').html();
+            }
+          })
+      
+        })        
+      </script>

@@ -1,0 +1,24 @@
+Customer(john): 
+    firstName: John
+    lastName: Doe
+    email: johndoe@flow7.net
+    phone: 123-123-1234
+
+Customer(sam):
+    firstName: sam
+    lastName: cartwright
+    email: scarwright@flow7.net
+    phone: 234-234-2344
+
+CustomerOrder(order1):
+    type: LAPTOP
+    disposalMethod: MAGNETIC
+    plan: SILVER
+    orderNumber: 123123123123
+    customer: sam
+
+Item(newsong):
+    filename: "/some/path/to/audio.mp3"
+    title: "Oh Happy Day"
+    album: "Bad Album Name"
+

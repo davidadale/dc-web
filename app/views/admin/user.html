@@ -1,0 +1,15 @@
+#{extends 'admin.html'/}
+#{set header:'users'/}
+
+#{form @Admin.editUser(user.id),method:"POST" }
+
+	<div class="span7">
+		<legend>Customer Information</legend>
+		${user.email}<br>
+        <div class="form-actions">
+       	<button type="submit" class="btn btn-large">edit</button>	
+        <a href="@{Admin.users()}" class="btn btn-large">Cancel</a>
+        </div>
+	</div>
+
+#{/form}

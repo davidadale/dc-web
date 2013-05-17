@@ -1,19 +1,27 @@
 #{extends 'site.html'/}
-<div class="row">
-	
-#{if flash.error}
-<div class="alert">
-	${flash.error}
-</div>
-#{/if}
 
-</div>
-<div class="row">
-	<div class="offset4 span5">
+	<div class="offset4 span5">		
 		#{form @Secure.authenticate()}
-		#{inputText name:'username',label:'Email'/}
+		#{inputText name:'username',label:'Email', value:flash?.username/}
 		#{inputPassword name:'password',label:'Password'/}
-		<input type="submit" value="submit"/>
+		<div class="control-group">
+    		<div class="controls">
+				<button type="submit" 
+					value="Login" 
+					class="btn">Login</button>
+					&nbsp;
+				<a href="@{Security.forgotPassword()}">Forgot Password</a>
+			</div>
+		</div>			
 		#{/form}
 	</div>
 </div>	
+
+
+<script>
+	if( $("input[name=username]").val() ){
+		$("input[name=password]").focus();
+	}else{
+		$("input[name=username]").focus();
+	}
+</script>

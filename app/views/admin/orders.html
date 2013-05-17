@@ -1,11 +1,17 @@
-#{extends 'site.html'/}
+#{extends 'admin.html'/}
+#{set header:'orders'/}
 
+<div class="span8">
+<a href="@{Admin.createOrder()}">Create Order</a>
 <table class="table">
 	<thead>
 		<tr>
 			<th>Order Number</th>
 			<th>Type</th>
 			<th>Plan</th>
+			<th>Created</th>
+			<th>Customer</th>
+			<th></th>
 		</tr>	
 	</thead>	
 	<tbody>
@@ -14,26 +20,11 @@
 		<td>${order.orderNumber}</td>
 		<td>${order.type}</td>
 		<td>${order.plan}</td>
+		<td>${order.created.format('MM/dd/yyyy')}</td>
+		<td>${order.customer?.name}</td>
+		<td><a href="@{Admin.showOrder( order.id )}">Show</a></td>
 	</tr>
 	#{/list}
 	</tbody>
 </table>
-
-<table class="table">
-	<thead>
-		<tr>
-			<th>Payment Token</th>
-			<th>Created</th>
-			<th>Order Number</th>
-		</tr>	
-	</thead>	
-	<tbody>
-	#{list items:cards, as:'payment'}
-	<tr>
-		<td>${payment.token}</td>
-		<td>${payment.created}</td>
-		<td>${payment.order.orderNumber}</td>
-	</tr>
-	#{/list}
-	</tbody>
-</table>
+</div>

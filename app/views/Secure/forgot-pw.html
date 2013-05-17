@@ -1,0 +1,13 @@
+#{extends 'site.html'/}
+
+	<div class="offset4 span5">		
+		#{form @Security.sendPasswordReminder()}
+		#{inputText name:'email',label:'Email', value:flash?.username/}
+		<div class="control-group">
+    		<div class="controls">
+				<button type="submit" class="btn">Send</button>
+			</div>
+		</div>			
+		#{/form}
+	</div>
+</div>

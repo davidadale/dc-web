@@ -1,0 +1,26 @@
+#{extends 'admin.html'/}
+#{set header:'customers'/}
+
+#{form @Admin.saveCustomer(),method:"POST" }
+
+	<div class="span4">
+		<legend>Customer Information</legend>
+		#{inputText name:"customer.firstName", value:customer?.firstName, label:"First Name"/}
+		#{inputText name:"customer.lastName", value:customer?.lastName, label:"Last Name"/}
+		#{inputText name:"customer.email", value:customer?.email, label:"Email"/}
+		#{inputText name:"customer.phone", value:customer?.phone,label:"Phone Number"/}
+
+        <div class="form-actions">
+        <input type="submit" class="btn btn-large btn-primary" value="Save and move on"/>
+        #{if customer.id}
+        <a href="@{Admin.showCustomer(customer.id)}" 
+        	class="btn btn-large">Cancel</a>
+        #{/if}
+        #{if !customer.id}
+        <a href="@{Admin.customers()}" 
+        	class="btn btn-large">Cancel</a>
+        #{/if}
+        </div>
+	</div>
+
+#{/form}

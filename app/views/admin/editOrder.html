@@ -1,0 +1,32 @@
+#{extends 'admin.html'/}
+#{set header:'orders'/}
+
+#{form @Admin.saveOrder(),method:"POST" }
+
+	<div class="span4">
+    <legend>Order details</legend>
+    #{select name:"order.type",
+    	label:'Type of Machine', 
+    	value:flash.order?.type, 
+        values:['LAPTOP','DESKTOP'],
+        labels:['Laptop','Desktop'] /}
+    
+    #{select name:"order.disposalMethod",
+         label:'Disposal Method', 
+         value:flash.order?.disposalMethod, 
+         values:['MAGNETIC','PHYSICAL','RETURN'],
+         labels:['Magnetically Erased','+ $10.00 Physically Destroyed','Return my machine'] /}
+
+    #{select name:"order.plan",
+    	label:'Cleaning Plan', 
+    	value:flash.order?.plan, 
+        values:['SILVER','GOLD','PLATINUM'],
+        labels:['Silver Plan ( 20 Gigabytes )','Gold Plan','Platinum Plan'] /}
+        <div class="form-actions">
+            <input type="submit" class="btn btn-large btn-primary" value="Save and move on"/>
+            <a href="/admin" class="btn btn-large">Cancel</a>
+        </div>
+
+	</div>
+
+#{/form}

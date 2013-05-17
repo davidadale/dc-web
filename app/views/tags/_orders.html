@@ -1,0 +1,22 @@
+%{
+	List orders = models.CustomerOrder.find("byCustomer",_customer).fetch()
+}%
+
+<table class="table">
+	<thead>
+		<tr>
+			<th>Order</th>
+			<th>Created</th>
+			<th>Type</th>
+		</tr>
+	</thead>
+	<tbody>
+	#{list items:orders, as:"order"}
+		<tr>
+			<td>${order.orderNumber}</td>
+			<td>${order.created}</td>
+			<td>${order.type}</td>
+		</tr>	
+	#{/list}
+	</tbody>
+</table>

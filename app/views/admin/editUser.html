@@ -1,0 +1,24 @@
+#{extends 'admin.html'/}
+#{set header:'users'/}
+
+#{form @Admin.saveUser(),method:"POST" }
+
+	<div class="span4">
+		<legend>Customer Information</legend>
+		#{inputText name:"user.email", value:user?.email, label:"Email"/}
+		#{inputPassword name:"user.password", value:user?.password, label:"Password"/}
+
+        <div class="form-actions">
+        <input type="submit" class="btn btn-large btn-primary" value="Save and move on"/>
+        #{if user.id}
+        <a href="@{Admin.showUser(user.id)}" 
+        	class="btn btn-large">Cancel</a>
+        #{/if}
+        #{if !user.id}
+        <a href="@{Admin.users()}" 
+        	class="btn btn-large">Cancel</a>
+        #{/if}
+        </div>
+	</div>
+
+#{/form}
