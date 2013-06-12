@@ -16,14 +16,6 @@ import notifiers.*;
 @SuppressWarnings("static-access")
 public class Orders extends Controller {
 
-    /**
-     * This method starts a new customer order process by clearing the session
-     * and then calling the create method.
-     */
-    public static void reset() {
-        session.clear();
-        showCustomerInfo();
-    }
 
     /**
      * Cancel the current order by clearing session data.
@@ -31,19 +23,6 @@ public class Orders extends Controller {
     public static void cancel() {
         session.clear();
         Site.index();
-    }
-
-    /**
-     * Fill out the customer general information starting the customer sign up
-     * process. The sesssion
-     */
-    public static void showCustomerInfo() {
-        Customer customer = null;
-        // see if the customer informatmion is already filled in
-        if (CustomerId.present()) { // should be some time limit applied here.
-            customer = Customer.findById(CustomerId.get());
-        }
-        renderTemplate("orders/customer.html", customer);
     }
 
     /**
@@ -83,7 +62,7 @@ public class Orders extends Controller {
         order.save();
         OrderId.put(order.id);
 
-        renderTemplate("orders/card.html");
+        renderTemplate("orders/thankYou.html");
     }
 
     public static void showCardInfo() {
@@ -138,7 +117,7 @@ public class Orders extends Controller {
             }
             Security.changePassword(user);
         } else {
-            Orders.reset();
+            Orders.cancel();
         }
     }
 

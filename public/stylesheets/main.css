@@ -1,6 +1,132 @@
-body{
-    
+.custom-form { width:300px;}
+.custom-form input{ width:100%;}
+.number{ float:left; width:195px;}
+.expiry{ float:right; width:85px;}
+.name{ float:left; width:195px;}
+.cvc{ float:right; width:85px;}
+
+/*input.ng-invalid.ng-dirty { background-color: #FA787E; }*/
+/*input.ng-valid.ng-dirty { background-color: #78FA89; }*/
+input.ng-valid-amex{ background: #fff url(../images/amex_32.png) no-repeat 95% center; }
+input.ng-valid-visa{ background: #fff url(../images/visa_32.png) no-repeat 95% center; }
+input.ng-valid-master{ background: #fff url(../images/mastercard_32.png) no-repeat 95% center;}
+input.ng-valid-discover{ background: #fff url(../images/discover_32.png) no-repeat 95% center;}
+
+body {
+	padding-top: 20px;
+	padding-bottom: 60px;
 }
 
-.card-expiry-month{ width:40px;}
-.card-expiry-year{ width:80px;}
+/* Custom container */
+.container {
+	margin: 0 auto;
+	max-width: 1000px;
+}
+.container > hr {
+	margin: 60px 0;
+}
+
+/* Main marketing message and sign up button */
+.jumbotron {
+	margin: 80px 0;
+	text-align: center;
+}
+.jumbotron h1 {
+	font-size: 100px;
+	line-height: 1;
+}
+.jumbotron .lead {
+	font-size: 24px;
+	line-height: 1.25;
+}
+.jumbotron .btn {
+	font-size: 21px;
+	padding: 14px 24px;
+}
+
+/* Supporting marketing content */
+.marketing {
+	margin: 60px 0;
+}
+.marketing p + h4 {
+	margin-top: 28px;
+}
+
+
+/* Customize the navbar links to be fill the entire space of the .navbar */
+.navbar .navbar-inner {
+	padding: 0; 
+}
+.navbar .nav {
+	margin: 0;
+	display: table;
+	width: 100%;
+}
+.navbar .nav li {
+	display: table-cell;
+	width: 1%;
+	float: none;
+}
+.navbar .nav li a {
+	font-weight: bold;
+	text-align: center;
+	border-left: 1px solid rgba(255,255,255,.75);
+	border-right: 1px solid rgba(0,0,0,.1);
+}
+.navbar .nav li:first-child a {
+	border-left: 0;
+	border-radius: 3px 0 0 3px;
+}
+.navbar .nav li:last-child a {
+	border-right: 0;
+	border-radius: 0 3px 3px 0;
+}
+h1.logo{
+	font-size:5em;
+	font-family:Racing Sans One;
+}
+.dc-art{
+	margin: 40px 0;
+	background-image: url("../images/copy5.jpg");
+	background-repeat: no-repeat;
+	width:100%px;
+	height:590px;
+}
+.login-box{
+	margin: 50px 0;
+	background-color: #fff;
+	border: 1px solid #a0a0a0;        
+	border-radius: 10px;
+padding: 20px 42px;
+}
+.login-box input[type=text],.login-box input[type=password]{
+font-size: 18px;
+height:33px;
+width:299px;
+}
+.login-box input[type=submit]{
+width:295px;
+}
+.login-box input.firstName{
+width: 140px;        
+}
+.login-box input.lastName {
+width: 140px;
+}
+
+.login-link{
+font-size: 18px;
+}
+
+.price{
+font-size: 5em;
+font-family:Racing Sans One;
+text-align: right;
+}
+.price span{
+position       : relative;
+vertical-align : super;   
+padding-bottom : .38em;
+background     : #fff; /* this will cover the dot */
+font-size      : 0.56em;
+}

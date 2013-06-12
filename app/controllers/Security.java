@@ -45,7 +45,7 @@ public class Security extends Secure.Security {
                 Secure.login();
             }else{
                 flash.error("Email was not found in the system. Please sign up.");
-                Orders.reset();                
+                Orders.cancel();                
             }
 
 

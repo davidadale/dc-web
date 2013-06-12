@@ -1,90 +1,59 @@
 #{extends 'site.html'/}
-<div class="span5">
-#{form @Orders.saveOrderInfo(),id:"order-form" }
-    <fieldset>
-    <legend>Tell us about your machine</legend>
-    #{select name:"order.type",label:'Type of Machine', value:flash.order?.type, 
-        values:['LAPTOP','DESKTOP'],
-        labels:['Laptop','Desktop'] /}
-    
-    #{select name:"order.disposalMethod",label:'Disposal Method', value:flash.order?.disposalMethod, 
-        values:['MAGNETIC','PHYSICAL','RETURN'],
-        labels:['Magnetically Erased','+ $10.00 Physically Destroyed','Return my machine'] /}
+#{set app:'order-form'/} 
+#{set pageTitle:'Order Details'/}
 
-    #{select name:"order.plan",label:'Cleaning Plan', value:flash.order?.plan, 
-        values:['SILVER','GOLD','PLATINUM'],
-        labels:['Silver Plan ( 20 Gigabytes )','Gold Plan','Platinum Plan'] /}
-    </fieldset>
-#{/form}
-    <hr/>
-<form id="payment-details" action="" method="POST">    
-    <fieldset>
-    <legend>Payment Information</legend>    
-    <div class="alert alert-error" style="display:none;">
-        <span class="payment-errors"></span>
+<div ng-controller="OrderController">
+<div class="row">
+    <div class="span5" >
+        #{form @Orders.saveOrderInfo(),id:"order-form" }
+            <fieldset>
+            <legend>Tell us about your machine</legend>
+            #{select name:"order.type",label:'Type of Machine', value:flash.order?.type, 
+                values:['LAPTOP','DESKTOP'],
+                labels:['Laptop','Desktop'] /}
+                
+            
+            #{select name:"order.disposalMethod",label:'Disposal Method', 
+                value:flash.order?.disposalMethod, 
+                values:['MAGNETIC','PHYSICAL','RETURN'],
+                labels:['Magnetically erased',
+                        'Physically destroyed',
+                        'Return my machine'] /}
+
+            #{select name:"order.plan",label:'Cleaning Plan', value:flash.order?.plan, 
+                values:['SILVER','GOLD','PLATINUM'],
+                labels:['20 Gigabytes','100 Gigabytes'] /}
+            </fieldset>
+        #{/form}
     </div>
-    #{inputText label:"Card Number:", class:"card-number"/}
-    #{inputText label:"CVC:", class:"card-cvc"/}
-    #{inputText2 class:"card-expiry-month"/}
-    #{inputText2 class:"card-expiry-year"/}
-    </fieldset>
-
-    <div class="form-actions">
-        <input type="submit" class="submit-button btn btn-large btn-primary" value="Submit Order"/>
-        <a href="@{Orders.cancel()}" class="btn btn-large">Cancel</a>
-    </div>
-</form>
-
-#{set 'moreScripts'}
-<script type="text/javascript" src="https://js.stripe.com/v1/"></script>
-<script type="text/javascript">
-    // this identifies your website in the createToken call below
-    Stripe.setPublishableKey('${cleaners.Config.getStripePublicKey()}');
-
-    $(document).ready(function() {
-      $("#payment-details").submit(function(event) {
-        alert("batng")
-        // disable the submit button to prevent repeated clicks
-        $('.submit-button').attr("disabled", "disabled");
-
-        try{
-
-        Stripe.createToken({
-            number: $('.card-number').val(),
-            cvc: $('.card-cvc').val(),
-            exp_month: $('.card-expiry-month').val(),
-            exp_year: $('.card-expiry-year').val()
-        }, stripeResponseHandler);
-
-
-        }catch(err){
-            alert( err )
-        }
-
-
-        // prevent the form from submitting with the default action
-        return false;
-      });
-  });
-  function stripeResponseHandler(status, response) {
-    
-    alert( response.error.message )
-
-    /*if (response.error) {
-        // show the errors on the form
-        $(".payment-errors").text(response.error.message);
-        $(".submit-button").removeAttr("disabled");
-    } else {
-        var form$ = $("#order-form");
-        // token contains id, last4, and card type
-        var token = response['id'];
-        // insert the token into the form so it gets submitted to the server
-        form$.append("<input type='hidden' name='card.token' value='" + token + "'/>");
-        // and submit
-        form$.get(0).submit();
-    }*/
-  }
-    
-</script>
-#{/set}
 </div>
+
+<div class="row">
+    <form class="span5 custom-form">
+        <fieldset>
+            <legend>Payment Information</legend>
+            <div class="number">
+                <label>Card number:</label>
+                <input type="text" id="paymentNumber" placeholder="•••• •••• •••• ••••" data-placeholder="Card number" autocompletetype="cc-number" required="" data-numeric="" class="unknown" cc-number ng-model="ccnumber">                
+            </div>
+            <div class="expiry">
+                <label>Expires:</label>
+                <input type="text" id="paymentExpiry" placeholder="MM / YY" autocompletetype="cc-exp" maxlength="9" pattern="\d*" data-numeric="" required="">                
+            </div>
+            <div class="name">
+                <label>Name on card:</label>
+                <input type="text" id="paymentName" data-placeholder="Name on card" autocompletetype="name" autocapitalize="words" autocorrect="off" spellcheck="off" required="">     
+            </div>            
+            <div class="cvc">
+                <label>Card code:</label>
+                <input type="text" id="paymentCVC" placeholder="CVC" autocompletetype="cc-csc" maxlength="4" pattern="\d*" autocomplete="off" data-numeric="" required="">     
+            </div>
+        </fieldset>            
+    </form>
+</div>
+</div>
+
+    
+
+
+

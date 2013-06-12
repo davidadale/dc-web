@@ -41,16 +41,6 @@
         
       </div>
 
-      <div id="popover" style="display:none">
-        #{form @Secure.authenticate()}
-        <label>Email</label>
-        <input type='text' name='username'/>
-        <label>Password</label>
-        <input type='password' name='password'/>
-        <input type='submit'/>
-        #{/form}
-      </div>
-
       <hr>
 
       <!-- Example row of columns -->
@@ -78,15 +68,3 @@
         <p>&copy; Company 2013</p>
       </div>
 
-      <script>
-        $(function(){
-
-          $('.login-link').popover( { 
-            html : true,
-            content: function() {
-              return $('#popover').html();
-            }
-          })
-      
-        })        
-      </script>

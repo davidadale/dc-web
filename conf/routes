@@ -7,6 +7,13 @@ GET     /                                       Site.index
 GET		/forgot									Security.forgotPassword
 POST	/send									Security.sendPasswordReminder
 
+
+POST	/customers								Orders.saveCustomerInfo
+POST	/orders                                 Orders.saveOrderInfo
+POST	/cancel                                 Orders.reset
+
+
+
 POST	/order									Orders.reset
 GET     /order                         			Orders.showCustomerInfo
 POST    /order/customer                         Orders.saveCustomerInfo
