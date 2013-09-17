@@ -6,7 +6,7 @@ import java.util.*;
 import models.*;
 import java.util.zip.*;
 import java.io.*;
-
+import static cleaners.Extensions.*;
 
 @With(Secure.class)
 public class Admin extends Controller{
@@ -39,6 +39,11 @@ public class Admin extends Controller{
 		CustomerOrder order = new CustomerOrder();
 		renderTemplate("admin/editOrder.html",order );
 	}
+
+    public static void uploadIndex( Long id, File file ){
+        println( file.toString() );
+        render();
+    }
 
 	public static void saveOrder(@Valid CustomerOrder order){
 		if( validation.hasErrors() ){

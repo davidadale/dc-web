@@ -3,7 +3,11 @@ package cleaners;
 import java.util.*;
 
 public class Extensions{
-	
+
+    public static void println(String value){
+        System.out.println( value );
+    }
+
 	public static boolean empty( Collection coll ){
 		if( coll==null || coll.isEmpty() ){
 			return true;

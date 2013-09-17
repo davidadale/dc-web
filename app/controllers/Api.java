@@ -4,8 +4,11 @@
  */
 package controllers;
 
+import cleaners.IndexReader;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
+
+import java.io.File;
 import java.util.*;
 import org.apache.commons.collections.CollectionUtils;
 import models.*;
@@ -37,6 +40,27 @@ public class Api extends Controller  {
         renderJSON(new SuccessResponse(token) );
 
     }
+
+    public static void uploadIndex( Long id, File file ){
+
+        IndexReader reader = new IndexReader();
+        List objects = null;
+        try{
+            objects = reader.read( file );
+
+            for( Object obj: objects ){
+                Map<String,String> row = (Map) obj;
+                for(String key: row.keySet()){
+
+                }
+            }
+
+        }catch(Exception e){
+            renderJSON( new ErrorResponse( "Error reading index. err: " + e.getMessage() ) );
+        }
+        renderJSON( new SuccessResponse( objects ) );
+    }
+
 
     public static void customers(){
         List<Customer> customers = Customer.findAll();

@@ -4,27 +4,30 @@
   <head>
     <meta charset="utf-8">
     <title>#{get 'pageTitle'/}</title>
+
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="description" content="">
     <meta name="author" content="">
     <link href='http://fonts.googleapis.com/css?family=Racing+Sans+One' rel='stylesheet' type='text/css'>
-    <!-- Le styles -->
-    <link href="@{'public/assets/css/bootstrap.css'}" rel="stylesheet">
-    <link href="@{'public/assets/css/bootstrap-responsive.css'}" rel="stylesheet">
-    <link href="@{'public/stylesheets/main.css'}" rel="stylesheet">
-    <!-- HTML5 shim, for IE6-8 support of HTML5 elements -->
-    <!--[if lt IE 9]>
-      <script src="assets/js/html5shiv.js"></script>
-    <![endif]-->
 
-    <!-- Fav and touch icons -->
-    <link rel="apple-touch-icon-precomposed" sizes="144x144" href="assets/ico/apple-touch-icon-144-precomposed.png">
-    <link rel="apple-touch-icon-precomposed" sizes="114x114" href="assets/ico/apple-touch-icon-114-precomposed.png">
-    <link rel="apple-touch-icon-precomposed" sizes="72x72" href="assets/ico/apple-touch-icon-72-precomposed.png">
-    <link rel="apple-touch-icon-precomposed" href="assets/ico/apple-touch-icon-57-precomposed.png">
+
+    <link href="@{'public/assets/css/bootstrap.css'}" rel="stylesheet">
+
+    <link href="@{'public/stylesheets/main.css'}" rel="stylesheet">
     <link rel="shortcut icon" href="assets/ico/favicon.png">
-    <script src="@{'public/assets/js/jquery.js'}"></script>                                   
-    <script src="http://cloud.github.com/downloads/digitalBush/jquery.maskedinput/jquery.maskedinput-1.3.js"></script>    
+
+    <script src="@{'public/javascripts/jquery.min.js'}"></script>
+    <script src="@{'public/javascripts/jquery.maskedinput.js'}"></script>
+
+    <style>
+        @media print
+        {
+            .login-link{display:none}
+        }
+    </style>
+
+    #{get 'moreStyles'/}
+
   </head>
 
   <body>
@@ -36,8 +39,8 @@
       <p>The safe way to retrieve your data and clear your drive</p>
       #{if flash.error}
       <div class="row">
-        <div class="span8">              
-          <div class="alert">
+        <div class="col-md-8">
+          <div class="alert alert-danger">
             &{flash.error}
           </div>
         </div>
@@ -45,7 +48,7 @@
       #{/if}
       #{if flash.success}
       <div class="row">
-        <div class="span8">              
+        <div class="col-md-8">
           <div class="alert alert-success">
             &{flash.success}
           </div>
@@ -57,42 +60,33 @@
 
       <div id="popover" style="display:none">
         #{form @Secure.authenticate()}
+        <div class="form-group">
         <label>Email</label>
-        <input type='text' name='username'/>
+        <input type='text' name='username' class="form-control"/>
+        </div>
+        <div class="form-group">
         <label>Password</label>
-        <input type='password' name='password'/>
-        <input type='submit'/>
+        <input type='password' name='password' class="form-control"/>
+        </div>
+        <input type='submit' class="form-control"/>
         #{/form}
       </div>    
 
     <!-- Le javascript
     ================================================== -->
     <!-- Placed at the end of the document so the pages load faster -->
-    <script type="text/javascript" src="@{'/public/javascripts/angular.js'}"></script>    
-    <script src="@{'public/assets/js/bootstrap-transition.js'}"></script>
-    <script src="@{'public/assets/js/bootstrap-alert.js'}"></script>
-    <script src="@{'public/assets/js/bootstrap-modal.js'}"></script>
-    <script src="@{'public/assets/js/bootstrap-dropdown.js'}"></script>
-    <script src="@{'public/assets/js/bootstrap-scrollspy.js'}"></script>
-    <script src="@{'public/assets/js/bootstrap-tab.js'}"></script>
-    <script src="@{'public/assets/js/bootstrap-tooltip.js'}"></script>
-    <script src="@{'public/assets/js/bootstrap-popover.js'}"></script>
-    <script src="@{'public/assets/js/bootstrap-button.js'}"></script>
-    <script src="@{'public/assets/js/bootstrap-collapse.js'}"></script>
-    <script src="@{'public/assets/js/bootstrap-carousel.js'}"></script>
-    <script src="@{'public/assets/js/bootstrap-typeahead.js'}"></script>
+    <script type="text/javascript" src="@{'/public/javascripts/angular.js'}"></script>
+    <script src="@{'public/assets/js/bootstrap.min.js'}"></script>
     #{get 'moreScripts' /}
     <script src="@{'public/javascripts/app.js'}"></script>
       <script>
         $(function(){
-
           $('.login-link').popover( { 
             html : true,
-            content: function() {
-              return $('#popover').html();
+            content: function() {              
+              return $('#popover').html();              
             }
           })
-      
         })        
       </script>    
   </body>

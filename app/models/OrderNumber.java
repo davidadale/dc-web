@@ -8,11 +8,9 @@ import static cleaners.Extensions.*;
 public class OrderNumber extends Model {
 
     public static String next() {
-        OrderNumber on = new OrderNumber();
-        on.save();
-        // a little padding so my order
-        // number doesn't look so corny
-        Long number = on.id + 999655l;
+        OrderNumber next = new OrderNumber();
+        next.save();        
+        Long number = next.id + 999655l;
         return lpad(number, 10);
     }
 }

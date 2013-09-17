@@ -3,12 +3,13 @@ package controllers;
 import cleaners.Cashier;
 import cleaners.CustomerId;
 import cleaners.OrderId;
+import exception.UserAlreadyRegisteredException;
 import models.*;
-import exception.*;
-import play.data.validation.*;
-import play.mvc.*;
-
-import notifiers.*;
+import notifiers.Mails;
+import play.Logger;
+import play.data.validation.Valid;
+import play.mvc.Catch;
+import play.mvc.Controller;
 
 /**
  * This controller handles creating new users by handling the sign up process.
@@ -57,12 +58,24 @@ public class Orders extends Controller {
         }
 
         Customer customer = Customer.findById(CustomerId.get());
-        order.customer = customer;
-        order.orderNumber = OrderNumber.next();
-        order.save();
-        OrderId.put(order.id);
+        
+        if( OrderId.notSet() ){
+            
+            order.customer = customer;
+            order.orderNumber = OrderNumber.next();
+            order.save();
+            OrderId.put( order.id );            
 
-        renderTemplate("orders/thankYou.html");
+        }else{            
+
+            CustomerOrder temp = CustomerOrder.findById( OrderId.get() );            
+            temp.updateFrom( order );
+            temp.save();
+            order = temp;
+            
+        }
+
+        renderTemplate("orders/thankYou.html",order);
     }
 
     public static void showCardInfo() {
@@ -101,23 +114,36 @@ public class Orders extends Controller {
     }
 
     public static void verifyAccount(String token) {
+
         Customer customer = Customer.find("byVerificationToken", token).first();
-        System.out.println("Customer is null: " + (customer == null));
+
         if (customer != null) {
+
+            Logger.info("Customer account %s has been verified.", customer.email);
+
             customer.verified = true;
             customer.save();
+
             User user = User.find("byEmail", customer.email).first();
-            System.out.println("User is null: " + (user == null));
+
             if (user == null) {
+                Logger.info("Creating a new user account for customer.");
                 user = new User();
                 user.email = customer.email;
+                user.password = customer.password;
                 user.verificationToken = customer.verificationToken;
                 user.save();
-
             }
-            Security.changePassword(user);
+
+            Security.signInAs( user );
+            Client.index();
+            //Security.changePassword(user);
+
         } else {
+
+            flash.error("Account doesn't seem to be valid. Please try registering again.");
             Orders.cancel();
+
         }
     }
 

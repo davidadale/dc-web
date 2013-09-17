@@ -1,7 +1,7 @@
-<div class="control-group #{ifError "${_name}"}error#{/ifError}">
+<div class="form-group #{ifError "${_name}"}error#{/ifError}">
     <label class="control-label" for="textarea">${_label}</label>
     <div class="controls">
-        <select name="${_name}">
+        <select name="${_name}" class="form-control">
             #{list items:_options, as:'opt'}
             <option#{if opt==_value} selected#{/if} value="${opt}" >#{if _labelProperty}${opt.getAt(_labelProperty)}#{/if}#{else}${opt}#{/else}</option>
             #{/list}
@@ -15,4 +15,3 @@
 </div>
 
 
- 

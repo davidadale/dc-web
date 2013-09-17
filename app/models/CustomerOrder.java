@@ -14,7 +14,7 @@ public class CustomerOrder extends Model{
     
     public enum Type{LAPTOP,DESKTOP}
     
-    public enum Plan{SILVER,GOLD,PLATINUM}//SILVER is inluded, GOLD 80 GB $30, Platinum 200 GB $75 
+    public enum Plan{SILVER,GOLD,PLATINUM}
 
     public enum Status{WAITING,RECEIVED,STARTED,COMPLETE,CANCELED}
 
@@ -32,7 +32,7 @@ public class CustomerOrder extends Model{
     public Plan plan;
 
     @Required
-    public Os system;
+    public Os system = Os.MAC;
 
     public Status status;   
     

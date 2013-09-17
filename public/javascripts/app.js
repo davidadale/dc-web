@@ -1,3 +1,33 @@
+var orderMgmt = angular.module('order-management',['ngTable']);
+
+orderMgmt.controller('OrderManagerController',function($scope, $filter, ngTableParams){
+    var data = [{foo:"one"},{foo:"two"}]
+
+    $scope.tableParams = new ngTableParams({
+        page: 1,            // show first page
+        total: data.length, // length of data
+        count: 10,          // count per page
+        sorting: {
+            foo: 'asc'     // initial sorting
+        }
+    });
+
+    // watch for changes of parameters
+    $scope.$watch('tableParams', function(params) {
+        // use build-in angular filter
+        var orderedData = params.sorting ?
+            $filter('orderBy')(data, params.orderBy()) :
+            data;
+
+        // slice array data on pages
+        $scope.items = orderedData.slice(
+            (params.page - 1) * params.count,
+            params.page * params.count
+        );
+    }, true);
+
+})
+
 var orderApp = angular.module('order-form', []);
 var FLOAT_REGEXP = /^\-?\d+((\.|\,)\d+)?$/;
 
@@ -7,6 +37,22 @@ var MASTER = /^5[1-5][0-9]{14}$/
 var AMERICAN = /^3[47][0-9]{13}$/
 var DISCOVER = /^6(?:011|5[0-9]{2})[0-9]{12}$/
 
+orderApp.directive('ccExpiry',function(){
+  return { 
+    link: function(scope,elm,attrs,ctrl){      
+      
+      elm.mask("99/99")
+      elm.bind('keyup', parse)
+
+      function parse(){
+        var vals = elm.val().split("/")
+        scope.expireMonth = vals[0]
+        scope.expireYear = vals[1]
+        scope.$apply()
+      }
+    }
+  }
+})
 
 orderApp.directive('ccNumber', function() {
   return {
@@ -58,4 +104,6 @@ orderApp.directive('ccNumber', function() {
 
 orderApp.controller('OrderController', function($scope) {
     $scope.ccnumber = ''
+    $scope.expireMonth = '05'
+    $scope.expireYear = '13'
 });

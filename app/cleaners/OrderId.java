@@ -11,6 +11,10 @@ public class OrderId{
 	    catch(Exception e){ return null; }
 	}
 
+    public static boolean notSet(){
+        return ( get() == null );
+    }
+
 	public static void put(Long id){
 	    Session.current().put( ORDER_ID, id );
 	}

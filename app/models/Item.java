@@ -24,6 +24,11 @@ public class Item extends Model{
         created = new Date();
         data = new LinkedList<MetaData>();
     }
+
+    public Item(String orderNumber, Customer customer, Map<String,String> data ){
+
+    }
+
     
     public Item(Customer customer){
         this();

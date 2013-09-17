@@ -1,69 +1,92 @@
 <!DOCTYPE html>
-<html lang="en">
-    <head>
-        <meta charset="utf-8">
-        <title>Bootstrap, from Twitter</title>
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <meta name="description" content="">
-        <meta name="author" content="">        
-        <link href="@{'public/assets/css/bootstrap.css'}" rel="stylesheet">
-        <style type="text/css">
-            body {
-                padding-top: 60px;
-                padding-bottom: 40px;
-            }
-            .sidebar-nav {
-                padding: 9px 0;
-            }
-        </style>
-        <link href="@{'public/assets/css/bootstrap-responsive.css'}" rel="stylesheet">    
-        <link type="text/css" rel="stylesheet" href="@{'public/stylesheets/main.css'}" />        
-        <script src="@{'/public/javascripts/jquery-1.7.2.min.js'}"></script>
-		<script src="@{'/public/assets/js/bootstrap.min.js'}"></script>
-        <!--[if lt IE 9]>
-          <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
-        <![endif]-->    
-    
-    </head>
-    <body>
-       <div class="navbar navbar-inverse navbar-fixed-top">
-          <div class="navbar-inner">
-            <div class="container">
-              <a class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse">
-                <span class="icon-bar"></span>
-                <span class="icon-bar"></span>
-                <span class="icon-bar"></span>
-              </a>
-              <a class="brand" href="#">Drive Cleaners</a>
-              <div class="nav-collapse collapse">
-                <ul class="nav">
-                  <li class="#{active 'orders' /}"><a href="@{Admin.index()}">Orders</a></li>
-                  <li  class="#{active 'customers' /}"><a href="@{Admin.customers()}">Customers</a></li>
-                  <li class="#{active 'users' /}"><a href="@{Admin.users()}">Users</a></li>
-                  <li><a href="@{Secure.logout()}">Logout</a></li>                  
-                </ul>
-              </div><!--/.nav-collapse -->
-            </div>
-          </div>
-        </div>
+<html lang="en" #{if app}ng-app="#{get 'app'/}"#{/if}>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <title>Sticky Footer Navbar Template for Bootstrap</title>
 
-        <div class="container-fluid">
-          #{if flash.error}
-            <div class="row">
-              <div class="span8">              
-                <div class="alert">
-                  &{flash.error}
-                </div>
-              </div>
+    <!-- Bootstrap core CSS -->
+    <link href="@{'public/assets/css/bootstrap.css'}" rel="stylesheet">
+    <link href="@{'public/assets/css/bootstrap-theme.css'}" rel="stylesheet">
+    <link href="@{'public/stylesheets/custom.css'}" rel="stylesheet">
+    #{get 'moreStyles'/}
+    <!-- Custom styles for this template -->
+
+    <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!--[if lt IE 9]>
+    <script src="../../assets/js/html5shiv.js"></script>
+    <script src="../../assets/js/respond.min.js"></script>
+    <![endif]-->
+</head>
+
+<body>
+
+<!-- Wrap all page content here -->
+<div id="wrap">
+
+    <!-- Fixed navbar -->
+    <div class="navbar navbar-default navbar-fixed-top">
+        <div class="container">
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                <a class="navbar-brand" href="#">Project name</a>
             </div>
-            #{/if}
-            <div class="row"/>            
-            #{doLayout /}
-            </div>
-            <footer>
-                <p>&copy; Company 2012</p>
-            </footer>
+            <div class="collapse navbar-collapse">
+                <ul class="nav navbar-nav">
+                    <li class="#{active 'orders' /}"><a href="@{Admin.orders()}">Orders</a></li>
+                    <li class="#{active 'customers' /}"><a href="@{Admin.customers()}">Customers</a></li>
+                    <li class="#{active 'users' /}"><a href="@{Admin.users()}">Users</a></li>
+                    <li class="dropdown">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown">Dropdown <b class="caret"></b></a>
+                        <ul class="dropdown-menu">
+                            <li><a href="#">Action</a></li>
+                            <li><a href="#">Another action</a></li>
+                            <li><a href="#">Something else here</a></li>
+                            <li class="divider"></li>
+                            <li class="dropdown-header">Nav header</li>
+                            <li><a href="#">Separated link</a></li>
+                            <li><a href="#">One more separated link</a></li>
+                        </ul>
+                    </li>
+                    <li><a href="@{Secure.logout()}">Logout</a></li>
+                </ul>
+            </div><!--/.nav-collapse -->
         </div>
-        #{get 'moreScripts' /}
-    </body>
-</html> 
+    </div>
+
+    <!-- Begin page content -->
+    <div class="container">
+    #{if flash.error}
+        <div class="row">
+            <div class="span8">
+                <div class="alert">
+                &{flash.error}
+                </div>
+            </div>
+        </div>
+    #{/if}
+        <div class="page-header">
+            <h1>Sticky footer with fixed navbar</h1>
+        </div>
+    #{doLayout /}
+    </div>
+</div>
+
+<div id="footer">
+    <div class="container">
+        <p class="text-muted credit">Example courtesy <a href="http://martinbean.co.uk">Martin Bean</a> and <a href="http://ryanfait.com/sticky-footer/">Ryan Fait</a>.</p>
+    </div>
+</div>
+<script src="@{'/public/javascripts/jquery.min.js'}"></script>
+<script src="@{'/public/assets/js/bootstrap.min.js'}"></script>
+<script type="text/javascript" src="@{'/public/javascripts/angular.js'}"></script>
+<script type="text/javascript" src="@{'/public/javascripts/app.js'}"></script>
+#{get 'moreScripts'/}
+</body>
+</html>

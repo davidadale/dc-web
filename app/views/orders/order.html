@@ -1,18 +1,52 @@
 #{extends 'site.html'/}
-#{set app:'order-form'/} 
+#{set app:'order-form'/}
 #{set pageTitle:'Order Details'/}
+#{set 'moreScripts'}
+    <!--script type="text/javascript" src="https://js.stripe.com/v2/"></script-->
+    <script type="text/javascript" src="https://js.stripe.com/v2/"></script>
+    <script type="text/javascript">
+
+        var stripeResponseHandler = function(status, response) {
+            
+            if (response.error) {
+                var $form = $('.payment-form');
+                // Show the errors on the form
+                $form.find('.payment-errors').text( response.error.message );
+                $form.find('button').prop('disabled', false);
+
+            } else {
+                var $form = $('.order-form');
+                var token = response.id;
+                $form.append(
+                    $('<input type="hidden" name="stripeToken" />').val( token ));
+                $form.get(0).submit();
+            }
+        }
+
+        // This identifies your website in the createToken call below
+        Stripe.setPublishableKey('${cleaners.Config.getStripePublicKey()}');
+
+        jQuery(function($) {
+            $('.payment-form').submit(function(event) {
+                var $form = $(this);
+                $form.find('button').prop( 'disabled', true );
+                Stripe.createToken( $form, stripeResponseHandler );
+                return false;
+              });
+        });
+    </script>    
+#{/set}
 
 <div ng-controller="OrderController">
 <div class="row">
-    <div class="span5" >
-        #{form @Orders.saveOrderInfo(),id:"order-form" }
+    <div class="col-md-5" >
+        #{form @Orders.saveOrderInfo(),class:"order-form" }
             <fieldset>
             <legend>Tell us about your machine</legend>
             #{select name:"order.type",label:'Type of Machine', value:flash.order?.type, 
                 values:['LAPTOP','DESKTOP'],
-                labels:['Laptop','Desktop'] /}
-                
-            
+                labels:['Laptop','Desktop'] ,class:"form-control"/}
+
             #{select name:"order.disposalMethod",label:'Disposal Method', 
                 value:flash.order?.disposalMethod, 
                 values:['MAGNETIC','PHYSICAL','RETURN'],
@@ -29,28 +63,34 @@
 </div>
 
 <div class="row">
-    <form class="span5 custom-form">
+    <div class="col-md-8">
+    <form class="payment-form">
         <fieldset>
             <legend>Payment Information</legend>
+            <input type="hidden"  value="{{expireMonth}}"data-stripe="exp-month"/>
+            <input type="hidden" value="{{expireYear}}" data-stripe="exp-year"/>
             <div class="number">
                 <label>Card number:</label>
-                <input type="text" id="paymentNumber" placeholder="•••• •••• •••• ••••" data-placeholder="Card number" autocompletetype="cc-number" required="" data-numeric="" class="unknown" cc-number ng-model="ccnumber">                
+                <input type="text" id="paymentNumber" placeholder="•••• •••• •••• ••••" data-placeholder="Card number" autocompletetype="cc-number" data-stripe="number" required="" data-numeric="" class="unknown form-control" cc-number ng-model="ccnumber">
             </div>
             <div class="expiry">
                 <label>Expires:</label>
-                <input type="text" id="paymentExpiry" placeholder="MM / YY" autocompletetype="cc-exp" maxlength="9" pattern="\d*" data-numeric="" required="">                
+                <input type="text" class="form-control" id="paymentExpiry" placeholder="MM / YY"  autocompletetype="cc-exp" maxlength="9"  data-numeric="" cc-expiry ng-model="ccExp" required="">
             </div>
             <div class="name">
                 <label>Name on card:</label>
-                <input type="text" id="paymentName" data-placeholder="Name on card" autocompletetype="name" autocapitalize="words" autocorrect="off" spellcheck="off" required="">     
+                <input type="text" class="form-control" id="paymentName" data-placeholder="Name on card" autocompletetype="name" autocapitalize="words" autocorrect="off" data-stripe="name" spellcheck="off" required="">
             </div>            
             <div class="cvc">
                 <label>Card code:</label>
-                <input type="text" id="paymentCVC" placeholder="CVC" autocompletetype="cc-csc" maxlength="4" pattern="\d*" autocomplete="off" data-numeric="" required="">     
+                <input type="text" class="form-control" id="paymentCVC" placeholder="CVC" autocompletetype="cc-csc" maxlength="4" pattern="\d*" autocomplete="off" data-numeric="" data-stripe="data-cc-csc" required="">
             </div>
         </fieldset>            
-    </form>
-</div>
+        <div class="buttons">
+            <button type="submit" class="btn btn-large btn-primary">Place Order</button>
+        </div>
+        </form>
+    </div>
 </div>
 
     

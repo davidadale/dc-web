@@ -1,8 +1,8 @@
-.custom-form { width:300px;}
-.custom-form input{ width:100%;}
-.number{ float:left; width:195px;}
+.payment-form { width:330px;}
+.payment-form input{ width:100%;}
+.number{ float:left; width:230px;}
 .expiry{ float:right; width:85px;}
-.name{ float:left; width:195px;}
+.name{ float:left; width:230px;}
 .cvc{ float:right; width:85px;}
 
 /*input.ng-invalid.ng-dirty { background-color: #FA787E; }*/
@@ -97,31 +97,33 @@ h1.logo{
 	background-color: #fff;
 	border: 1px solid #a0a0a0;        
 	border-radius: 10px;
-padding: 20px 42px;
+    padding: 20px 42px;
 }
 .login-box input[type=text],.login-box input[type=password]{
-font-size: 18px;
-height:33px;
-width:299px;
+    font-size: 18px;
+    height:33px;
+    width:292px;
 }
 .login-box input[type=submit]{
-width:295px;
+    width:295px;
 }
 .login-box input.firstName{
-width: 140px;        
+    width: 142px;
+    display:inline;
 }
 .login-box input.lastName {
-width: 140px;
+    width: 143px;
+    display:inline;
 }
 
 .login-link{
-font-size: 18px;
+    font-size: 18px;
 }
 
 .price{
-font-size: 5em;
-font-family:Racing Sans One;
-text-align: right;
+    font-size: 5em;
+    font-family:Racing Sans One;
+    text-align: right;
 }
 .price span{
 position       : relative;
@@ -129,4 +131,58 @@ vertical-align : super;
 padding-bottom : .38em;
 background     : #fff; /* this will cover the dot */
 font-size      : 0.56em;
+}
+
+.buttons{
+	float:right;
+	padding:20px 0 20px 10px;
+}
+
+
+
+/* Sticky footer styles
+-------------------------------------------------- */
+
+html,
+body {
+    height: 100%;
+    /* The html and body elements cannot have any padding or margin. */
+}
+
+/* Wrapper for page content to push down footer */
+#wrap {
+    min-height: 100%;
+    height: auto !important;
+    height: 100%;
+    /* Negative indent footer by its height */
+    margin: 0 auto -60px;
+    /* Pad bottom by footer height */
+    padding: 0 0 60px;
+}
+
+/* Set the fixed height of the footer here */
+#footer {
+    height: 60px;
+    background-color: #f5f5f5;
+}
+
+
+/* Custom page CSS
+-------------------------------------------------- */
+/* Not required for template or sticky footer method. */
+
+#wrap > .container {
+    padding: 60px 15px 0;
+}
+.container .credit {
+    margin: 20px 0;
+}
+
+#footer > .container {
+    padding-left: 15px;
+    padding-right: 15px;
+}
+
+code {
+    font-size: 80%;
 }

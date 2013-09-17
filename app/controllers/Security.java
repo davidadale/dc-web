@@ -75,6 +75,11 @@ public class Security extends Secure.Security {
 
     }
 
+    static void signInAs( User user  ){
+        session.put( "username",user.email );
+        onAuthenticated();
+    }
+
     static void onAuthenticated(){
         User user = User.find( "byEmail",connected() ).first();
         if( user.isAdmin ){
