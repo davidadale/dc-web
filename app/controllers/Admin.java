@@ -40,17 +40,37 @@ public class Admin extends Controller{
 		renderTemplate("admin/editOrder.html",order );
 	}
 
-    public static void uploadIndex( Long id, File file ){
-        println( file.toString() );
-        render();
-    }
-
 	public static void saveOrder(@Valid CustomerOrder order){
-		if( validation.hasErrors() ){
-			renderTemplate("admin/editOrder.html", order);
-		}
-		order.save();
-		orders();
+
+
+        println( "Customer first name is " + order.customer.firstName );
+        println( "Customer is already registered " + order.customer.alreadyRegistered() );
+        println( "########### Customer confirmed " + order.confirmed );
+        if( order.customer.alreadyRegistered() ){
+
+            if( !order.confirmed ){
+                flash.put("message","Customer already exists. Should we just create a new order for existing customer with this email?");
+                renderTemplate("admin/editOrder.html", order);
+            }
+
+            if( order.confirmed ){
+                order.customer = Customer.find("byEmail",order.customer.email ).first();
+            }
+
+        }else{
+
+            order.customer.save();
+        }
+
+        if( validation.hasErrors() ){
+            renderTemplate("admin/editOrder.html", order);
+        }
+        order.orderNumber = OrderNumber.next();
+        order.save();
+        orders();
+
+
+
 	}
 
 	public static void showOrder(Long id){

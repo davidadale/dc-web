@@ -28,7 +28,10 @@ POST    /admin/orders  							Admin.saveOrder
 GET     /admin/order 							Admin.createOrder
 GET     /admin/order/{id}  						Admin.showOrder
 POST    /admin/order/{id} 						Admin.editOrder
+
 POST    /admin/order/{id}/index                 Api.uploadIndex
+GET     /admin/order/{id}/items                 Api.getOrder
+
 GET		/admin/customers						Admin.customers
 POST 	/admin/customers 						Admin.saveCustomer
 GET     /admin/customer 						Admin.createCustomer
@@ -44,7 +47,8 @@ POST    /admin/password/{id}                    Admin.changePassword
 
 
 
-GET     /client   								Client.index 					
+GET     /client   								Client.index
+GET     /mystuff/{id}                           Client.manage
 POST    /api/token  							Api.createToken
 GET		/api/customers							Api.customers
 GET		/api/customer/{id}						Api.customer

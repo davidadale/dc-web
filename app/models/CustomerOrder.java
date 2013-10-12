@@ -2,6 +2,7 @@ package models;
 
 import java.math.BigDecimal;
 import java.util.Date;
+import java.util.Map;
 import java.util.UUID;
 import javax.persistence.*;
 import play.data.validation.*;
@@ -46,14 +47,22 @@ public class CustomerOrder extends Model{
 
     @ManyToOne
     public Customer customer;
-    
+
     public Long customerId;    
 
     public String orderNumber;
 
+    @Transient
+    public boolean confirmed;
+
     
     public CustomerOrder(){
         created = new Date();
+        customer = new Customer();
+    }
+
+    public void addItem( Map<String,Object> attributes  ){
+       new Item( orderNumber, attributes ).save();
     }
 
     public void updateFrom(CustomerOrder order){
@@ -61,7 +70,9 @@ public class CustomerOrder extends Model{
         if( order.type!=null){ type=order.type;}
         if( order.disposalMethod!=null ){disposalMethod=order.disposalMethod;}
         if( order.plan!=null ){plan = order.plan;}
+
         shipSame = order.shipSame;
+
         if( order.billing!=null ){billing=order.billing;}
         if( order.shipping!=null ){shipping=order.shipping;}
         if( order.customerId!=null ){customerId=order.customerId;}

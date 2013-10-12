@@ -17,4 +17,10 @@ public class Client extends Controller{
 		renderTemplate("client/show.html", customer, items );
 	}
 
+    public static void manage( Long orderId ){
+        CustomerOrder order = CustomerOrder.findById( orderId );
+        List<Item> items = Item.find("byOrderNumber", order.orderNumber ).fetch();
+        renderTemplate("client/index.html", items );
+    }
+
 }

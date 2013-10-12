@@ -44,3 +44,10 @@ body {
 code {
     font-size: 80%;
 }
+
+/*
+    This fixes the paging being out of line with the number of items to display
+    This fix was put in to fix the pagination class when using ng-table.
+*/
+div.pagination{ display:block; }
+ul.pagination{ margin:0; }

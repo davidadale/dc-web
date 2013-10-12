@@ -43,7 +43,7 @@ public class Customer extends Model{
         return this;
     }
 
-    public boolean alreadyRegistered(){
+    public boolean  alreadyRegistered(){
         Customer customer = Customer.find("byEmailAndVerified",email,true).first();
         return customer != null;
     }

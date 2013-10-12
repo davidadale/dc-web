@@ -38,59 +38,61 @@
 #{/set}
 
 <div ng-controller="OrderController">
-<div class="row">
-    <div class="col-md-5" >
-        #{form @Orders.saveOrderInfo(),class:"order-form" }
-            <fieldset>
-            <legend>Tell us about your machine</legend>
-            #{select name:"order.type",label:'Type of Machine', value:flash.order?.type, 
-                values:['LAPTOP','DESKTOP'],
-                labels:['Laptop','Desktop'] ,class:"form-control"/}
+    <div class="row">
+        <div class="col-md-5" >
+            #{form @Orders.saveOrderInfo(),class:"order-form" }
+                <fieldset>
+                <legend>Tell us about your machine</legend>
+                #{select name:"order.type",label:'Type of Machine', value:flash.order?.type,
+                    values:['LAPTOP','DESKTOP'],
+                    labels:['Laptop','Desktop'] ,class:"form-control"/}
 
-            #{select name:"order.disposalMethod",label:'Disposal Method', 
-                value:flash.order?.disposalMethod, 
-                values:['MAGNETIC','PHYSICAL','RETURN'],
-                labels:['Magnetically erased',
-                        'Physically destroyed',
-                        'Return my machine'] /}
+                #{select name:"order.disposalMethod",label:'Disposal Method',
+                    value:flash.order?.disposalMethod,
+                    values:['MAGNETIC','PHYSICAL','RETURN'],
+                    labels:['Magnetically erased',
+                            'Physically destroyed',
+                            'Return my machine'] /}
 
-            #{select name:"order.plan",label:'Cleaning Plan', value:flash.order?.plan, 
-                values:['SILVER','GOLD','PLATINUM'],
-                labels:['20 Gigabytes','100 Gigabytes'] /}
-            </fieldset>
-        #{/form}
-    </div>
-</div>
-
-<div class="row">
-    <div class="col-md-8">
-    <form class="payment-form">
-        <fieldset>
-            <legend>Payment Information</legend>
-            <input type="hidden"  value="{{expireMonth}}"data-stripe="exp-month"/>
-            <input type="hidden" value="{{expireYear}}" data-stripe="exp-year"/>
-            <div class="number">
-                <label>Card number:</label>
-                <input type="text" id="paymentNumber" placeholder="•••• •••• •••• ••••" data-placeholder="Card number" autocompletetype="cc-number" data-stripe="number" required="" data-numeric="" class="unknown form-control" cc-number ng-model="ccnumber">
-            </div>
-            <div class="expiry">
-                <label>Expires:</label>
-                <input type="text" class="form-control" id="paymentExpiry" placeholder="MM / YY"  autocompletetype="cc-exp" maxlength="9"  data-numeric="" cc-expiry ng-model="ccExp" required="">
-            </div>
-            <div class="name">
-                <label>Name on card:</label>
-                <input type="text" class="form-control" id="paymentName" data-placeholder="Name on card" autocompletetype="name" autocapitalize="words" autocorrect="off" data-stripe="name" spellcheck="off" required="">
-            </div>            
-            <div class="cvc">
-                <label>Card code:</label>
-                <input type="text" class="form-control" id="paymentCVC" placeholder="CVC" autocompletetype="cc-csc" maxlength="4" pattern="\d*" autocomplete="off" data-numeric="" data-stripe="data-cc-csc" required="">
-            </div>
-        </fieldset>            
-        <div class="buttons">
-            <button type="submit" class="btn btn-large btn-primary">Place Order</button>
+                #{select name:"order.plan",label:'Cleaning Plan', value:flash.order?.plan,
+                    values:['SILVER','GOLD','PLATINUM'],
+                    labels:['20 Gigabytes','100 Gigabytes'] /}
+                </fieldset>
+            #{/form}
         </div>
-        </form>
     </div>
+
+    <div class="row">
+        <div class="col-md-8">
+        <form class="payment-form">
+            <fieldset>
+                <legend>Payment Information</legend>
+                <input type="hidden"  value="{{expireMonth}}"data-stripe="exp-month"/>
+                <input type="hidden" value="{{expireYear}}" data-stripe="exp-year"/>
+                <div class="number">
+                    <label>Card number:</label>
+                    <input type="text" id="paymentNumber" placeholder="•••• •••• •••• ••••" data-placeholder="Card number" autocompletetype="cc-number" data-stripe="number" required="" data-numeric="" class="unknown form-control" cc-number ng-model="ccnumber">
+                </div>
+                <div class="expiry">
+                    <label>Expires:</label>
+                    <input type="text" class="form-control" id="paymentExpiry" placeholder="MM / YY"  autocompletetype="cc-exp" maxlength="9"  data-numeric="" cc-expiry ng-model="ccExp" required="">
+                </div>
+                <div class="name">
+                    <label>Name on card:</label>
+                    <input type="text" class="form-control" id="paymentName" data-placeholder="Name on card" autocompletetype="name" autocapitalize="words" autocorrect="off" data-stripe="name" spellcheck="off" required="">
+                </div>
+                <div class="cvc">
+                    <label>Card code:</label>
+                    <input type="text" class="form-control" id="paymentCVC" placeholder="CVC" autocompletetype="cc-csc" maxlength="4" pattern="\d*" autocomplete="off" data-numeric="" data-stripe="data-cc-csc" required="">
+                </div>
+            </fieldset>
+            <div class="buttons">
+                <button type="submit" class="btn btn-large btn-primary">Place Order</button>
+            </div>
+            </form>
+        </div>
+    </div>
+
 </div>
 
     

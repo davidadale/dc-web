@@ -1,0 +1,8 @@
+app.config
+.DS_Store
+dc-web.iml
+dc-web.ipr
+dc-web.iws
+.classpath
+.project
+.settings

@@ -1,7 +1,7 @@
 <div class="control-group #{ifError "${_name}"}error#{/ifError}">
   <label class="control-label" for="input01">${_label}</label>
   <div class="controls">
-    <input type="text" class="input-xlarge" name="${_name}" #{if _value!=null}value="${_value}"#{/if}  id="${_id?_id:_name}" placeholder="${_placeholder}">
+    <input type="text" class="input-xlarge form-control" name="${_name}" #{if _value!=null}value="${_value}"#{/if}  id="${_id?_id:_name}" placeholder="${_placeholder}">
     <p class="help-inline">#{error "${_name}"/}</p>
   </div>
 </div>

@@ -1,11 +1,17 @@
-var orderMgmt = angular.module('order-management',['ngTable']);
+var orderMgmt = angular.module('order-management',['ngTable','ngResource']);
 
-orderMgmt.controller('OrderManagerController',function($scope, $filter, ngTableParams){
-    var data = [{foo:"one"},{foo:"two"}]
+orderMgmt.controller('OrderManagerController',function($scope, $filter, $resource, ngTableParams){
+    $scope.data = []
+    var API
+
+
+    $scope.init = function( id ){
+        API = $resource( "/admin/order/:id/items", {id: id} )
+    }
 
     $scope.tableParams = new ngTableParams({
         page: 1,            // show first page
-        total: data.length, // length of data
+        total: 0, //$scope.data.length, // length of data
         count: 10,          // count per page
         sorting: {
             foo: 'asc'     // initial sorting
@@ -14,19 +20,49 @@ orderMgmt.controller('OrderManagerController',function($scope, $filter, ngTableP
 
     // watch for changes of parameters
     $scope.$watch('tableParams', function(params) {
-        // use build-in angular filter
-        var orderedData = params.sorting ?
-            $filter('orderBy')(data, params.orderBy()) :
-            data;
 
-        // slice array data on pages
-        $scope.items = orderedData.slice(
-            (params.page - 1) * params.count,
-            params.page * params.count
-        );
+        $scope.loading = true;
+        API.get(  params.url() , function(json){
+                $scope.loading = false;
+                $scope.items = json.data
+                $scope.tableParams.total = json.resultSize
+            })
     }, true);
 
 })
+
+
+orderMgmt.directive('dropzone', function() {
+    return {
+        restrict: 'EA',
+        link: function(scope, el, attrs) {
+            el.dropzone({
+                url: attrs.url,
+                maxFilesize: attrs.maxsize,
+                init: function() {
+
+                    this.on('success', function(file, json) {
+                        //alert( json.data[0].CamelAwsS3Key )
+                        scope.$apply(function(){
+                            for(var i in json.data ){
+                                scope.items.push({foo: json.data[i].filename });
+                            }
+                        });
+                    });
+
+                    /*this.on('addedfile', function(file) {
+                        scope.$apply(function(){
+                            scope.items.push({foo: 'added'});
+                        });
+                    });*/
+
+                }
+            })
+        }
+    }
+});
+
+
 
 var orderApp = angular.module('order-form', []);
 var FLOAT_REGEXP = /^\-?\d+((\.|\,)\d+)?$/;

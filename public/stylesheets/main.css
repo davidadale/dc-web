@@ -55,7 +55,7 @@ body {
 
 /* Customize the navbar links to be fill the entire space of the .navbar */
 .navbar .navbar-inner {
-	padding: 0; 
+	padding: 0;
 }
 .navbar .nav {
 	margin: 0;
@@ -95,7 +95,7 @@ h1.logo{
 .login-box{
 	margin: 50px 0;
 	background-color: #fff;
-	border: 1px solid #a0a0a0;        
+	border: 1px solid #a0a0a0;
 	border-radius: 10px;
     padding: 20px 42px;
 }
@@ -127,7 +127,7 @@ h1.logo{
 }
 .price span{
 position       : relative;
-vertical-align : super;   
+vertical-align : super;
 padding-bottom : .38em;
 background     : #fff; /* this will cover the dot */
 font-size      : 0.56em;
@@ -185,4 +185,8 @@ body {
 
 code {
     font-size: 80%;
+}
+
+div.pagination{
+    display:block;
 }

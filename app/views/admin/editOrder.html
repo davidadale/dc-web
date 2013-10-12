@@ -1,7 +1,29 @@
 #{extends 'admin.html'/}
 #{set header:'orders'/}
 
-#{form @Admin.saveOrder(),method:"POST" }
+
+
+#{form @Admin.saveOrder(),method:"POST",name:"createOrderForm" }
+
+    #{if flash.get("message")}
+    <div class="alert alert-block alert-danger fade in">
+        <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
+        <h4>Customer already exists!</h4>
+        <p>Would you like to go ahead and create a new order attached to existing customer?</p>
+        <p>
+            <a class="btn btn-danger confirm" href="#">Create order</a> <a class="btn btn-default" href="#">Cancel</a>
+        </p>
+    </div>
+    #{/if}
+
+    <div class="span4">
+        <legend>Customer Details</legend>
+        <input type="hidden" name="order.customer.verified" value="true"/>
+        #{inputText label:"First Name", name:"order.customer.firstName",value:order.customer.firstName /}
+        #{inputText label:"Last Name", name:"order.customer.lastName",value:order.customer.lastName/}
+        #{inputText label:"Email Name", name:"order.customer.email", value:order.customer.email/}
+    </div>
+
 
 	<div class="span4">
     <legend>Order details</legend>
@@ -30,3 +52,22 @@
 	</div>
 
 #{/form}
+
+
+#{set 'moreScripts'}
+<script>
+    $(function(){
+        $(".confirm").click(function(){
+            var $form = $("form[name=createOrderForm]")
+            $form.append(
+                    $('<input type="hidden" name="order.confirmed" />').val( "true" ) );
+
+            //alert( $form.serialize() )
+
+            $form.submit()
+        })
+
+    })
+
+</script>
+#{/set}

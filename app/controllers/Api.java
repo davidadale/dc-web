@@ -5,17 +5,14 @@
 package controllers;
 
 import cleaners.IndexReader;
-import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
 
 import java.io.File;
 import java.util.*;
-import org.apache.commons.collections.CollectionUtils;
+
+import cleaners.ItemSerializer;
 import models.*;
 
-import play.data.validation.Error;
-import play.data.validation.Validation;
-import play.db.jpa.JPA;
+import play.Logger;
 import play.mvc.Controller;
 import static cleaners.Extensions.*;
 
@@ -24,6 +21,9 @@ import static cleaners.Extensions.*;
  * @author daviddale
  */
 public class Api extends Controller  {
+
+
+
 
     public static void createToken(String username,String password){
         User user = User.find("byEmail",username).first();
@@ -43,22 +43,46 @@ public class Api extends Controller  {
 
     public static void uploadIndex( Long id, File file ){
 
+        CustomerOrder order = CustomerOrder.findById( id );
+
+        if( order==null ){
+            renderJSON( new ErrorResponse("Error trying to retrieve the order for " + id ) );
+        }
+
         IndexReader reader = new IndexReader();
-        List objects = null;
+
         try{
-            objects = reader.read( file );
 
-            for( Object obj: objects ){
-                Map<String,String> row = (Map) obj;
-                for(String key: row.keySet()){
+            List rows = reader.read( file );
 
-                }
+            for( Object obj: rows ){
+                Map<String,Object> attributes = (Map) obj;
+                order.addItem( attributes );
             }
 
         }catch(Exception e){
+            Logger.error(e, "Error occurred trying to upload index: ");
+            e.printStackTrace();
             renderJSON( new ErrorResponse( "Error reading index. err: " + e.getMessage() ) );
+
         }
-        renderJSON( new SuccessResponse( objects ) );
+        List<Item> items = Item.find("byOrderNumber", order.orderNumber ).fetch();
+
+        renderJSON( new SuccessResponse( items ), new ItemSerializer() );
+    }
+
+    public static void getOrder( Long id ){
+
+        println("!!!!!!!!!!!!!!!!!!!!!  " + params.get("sorting[foo]") );
+
+
+        CustomerOrder order = CustomerOrder.findById( id );
+
+        List<Item> items = Item.find("byOrderNumber", order.orderNumber ).from( params.get("page", Integer.class) ).fetch( params.get("count",Integer.class) );
+        Long resultSize = Item.count("byOrderNumber",order.orderNumber);
+
+
+        renderJSON( new SuccessResponse( items, resultSize ), new ItemSerializer() );
     }
 
 
@@ -138,17 +162,12 @@ public class Api extends Controller  {
             renderJSON( new ErrorResponse("No item found for item id " + id ));
         }
 
-        Long custId = item.customer.id;
+        String orderNumber = item.orderNumber;
+
         item.delete();
 
-        Customer customer = Customer.findById( custId );
-
-        if( not(customer) ){
-            renderJSON( new ErrorResponse("No customer found for customer id " + custId ));
-        }
-
-        List<Item> items = Item.find("byCustomer",customer).fetch();
-        renderJSON( new SuccessResponse(items) );
+        List<Item> items = Item.find( "byOrderNumber", orderNumber ).fetch();
+        renderJSON( new SuccessResponse( items ) );
 
     }
 

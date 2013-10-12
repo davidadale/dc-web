@@ -6,9 +6,6 @@ import javax.persistence.*;
 @Entity
 public class MetaData extends Model{
 
-	@ManyToOne
-	Item item;
-
 	public String name;
 	public String value;
 
@@ -16,8 +13,7 @@ public class MetaData extends Model{
 
 	}
 
-	public MetaData(Item item, String name, String value){
-		this.item = item;
+	public MetaData( String name, String value){
 		this.name = name;
 		this.value = value;
 	}

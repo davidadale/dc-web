@@ -4,8 +4,14 @@ import java.util.*;
 
 public class Extensions{
 
-    public static void println(String value){
-        System.out.println( value );
+    public static void println(String value, Object... params ){
+
+        if( params != null ){
+            System.out.println( String.format(value,params ) );
+        }else{
+            System.out.println( value );
+        }
+
     }
 
 	public static boolean empty( Collection coll ){

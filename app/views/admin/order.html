@@ -1,32 +1,48 @@
 #{extends 'admin.html'/}
 #{set app:'order-management'/}
 #{set header:'orders'/}
-<div class="row" ng-controller="OrderManagerController">
-    <a href="@{Admin.deleteOrder(order.id)}" class="btn btn-default">Delete</a>
-    <div class="col-md-7">
 
-        ${order.type} <br>
-        ${order.created}<br>
-        ${order.plan}
-
-        <table class="table" ng-table="tableParams" >
-            <tr ng-repeat="item in items">
-                <td data-title="Column1 " sortable="foo">{{item.foo}}</td>
-                <td data-title="Column2 " sortable="foo">{{item.foo}}</td>
-            </tr>
-        </table>
-
-    </div>
-
-    <div class="col-md-5">
-        <form action="/admin/order/${order.id}/index" class="dropzone" id="dz" method="POST">
-            <div class="text-center" style="margin: 50% auto;">
-            <h1>Drop files <small>to upload</small></h1>
-            (or click)
+<div ng-controller="OrderManagerController" ng-init="init(${order.id})">
+    <div class="page-header">
+        <div class="row">
+            <div class="col-md-3">
+                <h1>Order: <small>${order.orderNumber}</small></h1>
             </div>
-        </form>
+            <div class="col-md-2" style="margin-top:40px;">
+                <label>Customer:</label> ${order?.customer?.name}
+            </div>
+            <div class="col-md-4">
+                    <h4>Email: ${order?.customer?.email}</h4>
+            </div>
+            <div class="col-md-3">
+                <div class="pull-right">
+                <a href="@{Admin.deleteOrder(order.id)}" class="btn btn-danger">Delete</a>
+                <a href="@{Admin.orders()}" class="btn btn-default">Close</a>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-12">
+            <div class="dropzone" dropzone url="/admin/order/${order.id}/index" id="dz" method="POST">
+                <!-- div class="text-center">
+                    <h1>Drop files <small>to upload</small></h1>
+                    (or click)
+                </div -->
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-12">
+            <table ng-table="tableParams" class="table">
+                <tr ng-repeat="item in items">
+                    <td data-title="Column1 " sortable="foo">{{item.filename}}</td>
+                </tr>
+            </table>
+        </div>
     </div>
 </div>
+
 #{set 'moreStyles'}
     <link href="@{'public/stylesheets/ng-table.css'}" rel="stylesheet">
     <link href="@{'public/stylesheets/dropzone.css'}" rel="stylesheet">
@@ -35,21 +51,6 @@
     <script src="@{'public/javascripts/ng-table.js'}"></script>
     <script src="@{'public/javascripts/dropzone.js'}"></script>
     <script>
-
-        Dropzone.options.dz = {
-            addRemoveLinks:true,
-            init: function() {
-                this.on("success", function(file, json ) {
-                    // Handle the responseText here. For example, add the text to the preview element:
-                    //file.previewTemplate.appendChild(document.createTextNode(responseText));
-                    if( json.success ){
-                        alert( json.data )
-                    }else{
-                        alert( json.msg )
-                    }
-
-                });
-            }
-        };
+        Dropzone.autoDiscover = false;
     </script>
 #{/set}
