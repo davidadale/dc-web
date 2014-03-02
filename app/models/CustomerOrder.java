@@ -5,6 +5,8 @@ import java.util.Date;
 import java.util.Map;
 import java.util.UUID;
 import javax.persistence.*;
+
+import cleaners.AuthCode;
 import play.data.validation.*;
 import play.db.jpa.*;
 
@@ -52,6 +54,8 @@ public class CustomerOrder extends Model{
 
     public String orderNumber;
 
+    public String authCode;
+
     @Transient
     public boolean confirmed;
 
@@ -59,6 +63,7 @@ public class CustomerOrder extends Model{
     public CustomerOrder(){
         created = new Date();
         customer = new Customer();
+        authCode = new AuthCode().value;
     }
 
     public void addItem( Map<String,Object> attributes  ){

@@ -10,6 +10,10 @@ import play.Logger;
 import play.data.validation.Valid;
 import play.mvc.Catch;
 import play.mvc.Controller;
+import play.mvc.Router;
+
+import java.util.Map;
+import java.util.HashMap;
 
 /**
  * This controller handles creating new users by handling the sign up process.
@@ -74,8 +78,17 @@ public class Orders extends Controller {
             order = temp;
             
         }
+        Map<String,Object> params = new HashMap<String,Object>();
+        params.put("authCode", order.authCode );
+System.out.println( "Map ----------- params ------> " + params );
+        String url = Router.reverse( "Orders.thankYou", params ).url;
+System.out.println("URL ------------------------------> " + url );
+        redirect( url );
+    }
 
-        renderTemplate("orders/thankYou.html",order);
+    public static void thankYou( String authCode ){
+        CustomerOrder order = CustomerOrder.find( "byAuthCode", authCode ).first();
+        renderTemplate("orders/thankYou.html", order );
     }
 
     public static void showCardInfo() {
@@ -105,12 +118,7 @@ public class Orders extends Controller {
         CustomerOrder order = CustomerOrder.findById(OrderId.get());
         Card card = Card.find("byOrder", order).first();
         Cashier.get().makePayment(card, order.getTotal());
-        thankYou();
-    }
-
-    public static void thankYou() {
-        CustomerOrder order = CustomerOrder.findById(OrderId.get());
-        renderTemplate("orders/thankYou.html", order);
+        //thankYou();
     }
 
     public static void verifyAccount(String token) {

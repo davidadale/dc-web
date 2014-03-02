@@ -9,6 +9,7 @@ POST	/send									Security.sendPasswordReminder
 
 POST	/customers								Orders.saveCustomerInfo
 POST	/orders                                 Orders.saveOrderInfo
+GET     /thankYou/{authCode}                    Orders.thankYou
 POST	/cancel                                 Orders.reset
 
 POST	/order									Orders.reset
